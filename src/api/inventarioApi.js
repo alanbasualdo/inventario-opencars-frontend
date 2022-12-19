@@ -11,7 +11,7 @@ inventarioApi.interceptors.request.use(config => {
 
     config.headers = {
         ...config.headers,
-        'x-token': localStorage.getItem('token')
+        'token': sessionStorage.getItem('token')
     }
 
     return config

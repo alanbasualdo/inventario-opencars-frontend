@@ -1,108 +1,47 @@
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import '../styles/ImpresorasPage.css'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { Card, Col, ListGroup, Row } from 'react-bootstrap'
-import Modal from 'react-bootstrap/Modal'
+import { useImpStore } from '../hooks/useImpStore'
+import { ImpresorasForm } from '../components/ImpresorasForm'
 
 export const ImpresorasPage = () => {
 
-    const [show, setShow] = useState(false);
+    const { impresoras, startGetImp } = useImpStore()
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+
+
+    useEffect(() => {
+        startGetImp()
+    }, [])
 
     return (
         <>
-            <nav className="navbar mb-4">
-                <form className="container-fluid justify-content-center">
-                    <button className="btn btn-outline-success" type="button" title='Agregar impresora' onClick={handleShow}><i className="bi bi-plus-lg"></i></button>
-                </form>
-            </nav>
+
+            <ImpresorasForm />
 
             <div className='text-center'>
                 <h3>Impresoras</h3>
             </div>
 
-            <Modal show={show} onHide={handleClose}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Agregar impresora</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form>
-                        <div className="input-group input-group-sm mb-2">
-                        <select className="form-select" aria-label="Default select example">
-                                <option selected>Ciudad</option>
-                                <option value="1">Si</option>
-                                <option value="2">No</option>
-                            </select>
-                            <select className="form-select" aria-label="Default select example">
-                                <option selected>Sucursal</option>
-                                <option value="1">Si</option>
-                                <option value="2">No</option>
-                            </select>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-2">
-                        <select className="form-select" aria-label="Default select example">
-                                <option selected>Marca</option>
-                                <option value="1">Si</option>
-                                <option value="2">No</option>
-                            </select>
-                            <input type="text" className="form-control" placeholder="Modelo"></input>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-2">
-                        <select className="form-select" aria-label="Default select example">
-                                <option selected>Tóner</option>
-                                <option value="1">Si</option>
-                                <option value="2">No</option>
-                            </select>
-                            <select className="form-select" aria-label="Default select example">
-                                <option selected>Es propia?</option>
-                                <option value="1">Si</option>
-                                <option value="2">No</option>
-                            </select>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-2">
-                            <input type="text" className="form-control" placeholder="Sector" />
-                            <input type="text" className="form-control" placeholder="IP"></input>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-2">
-                            <input type="text" className="form-control" placeholder="Código" />
-                            <input type="text" className="form-control" placeholder="Proveedor"></input>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-2">
-                            <input type="text" className="form-control" placeholder="Facturado para..." />
-                            <textarea class="form-control" aria-label="With textarea" placeholder='Comentarios'></textarea>
-                        </div>
-                    </form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <button className='btn btn-sm btn-outline-danger' onClick={handleClose}>
-                        Cancelar
-                    </button>
-                    <button className='btn btn-sm btn-outline-success' onClick={handleClose}>
-                        Guardar
-                    </button>
-                </Modal.Footer>
-            </Modal>
-
             <Row xs={1} md={2} lg={3} className="g-4 text-center m-2">
-                {Array.from({ length: 4 }).map((_, idx) => (
-                    <Col>
-                        <Card key={idx}>
+                {Array.from(impresoras).map(impresora => (
+                    <Col key={impresora.uid}>
+                        <Card>
                             <Card.Body>
                                 <ListGroup variant="flush">
-                                    <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                                    <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                                    <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                                    <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.ciudad}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.sucursal}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.marca}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.modelo}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.toner}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.propia}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.estado}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.sector}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.ip}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.codigo}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.proveedor}</ListGroup.Item>
+                                    <ListGroup.Item>{impresora.comentarios}</ListGroup.Item>
                                 </ListGroup>
                             </Card.Body>
                         </Card>

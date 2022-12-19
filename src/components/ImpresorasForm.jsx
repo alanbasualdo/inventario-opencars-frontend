@@ -1,13 +1,11 @@
-import 'bootstrap-icons/font/bootstrap-icons.css'
 import { useState } from 'react'
-import { Card, Col, ListGroup, Row } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 
-export const CelularesPage = () => {
-    const [show, setShow] = useState(false);
+export const ImpresorasForm = () => {
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [show, setShow] = useState(false)
+    const handleShow = () => setShow(true)
+    const handleClose = () => setShow(false)
 
     return (
         <>
@@ -17,16 +15,12 @@ export const CelularesPage = () => {
                 </form>
             </nav>
 
-            <div className='text-center'>
-                <h3>Celulares</h3>
-            </div>
-
             <Modal show={show} onHide={handleClose}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Agregar celular</Modal.Title>
+                    <Modal.Title>Agregar impresora</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form>
@@ -59,19 +53,28 @@ export const CelularesPage = () => {
                                 <option value="2">No</option>
                             </select>
                             <select className="form-select" aria-label="Default select example">
-                                <option selected>Es propia?</option>
+                                <option selected>Propia</option>
                                 <option value="1">Si</option>
                                 <option value="2">No</option>
                             </select>
                         </div>
 
                         <div className="input-group input-group-sm mb-2">
+                            <select className="form-select" aria-label="Default select example">
+                                <option selected>Estado</option>
+                                <option value="1">Activa</option>
+                                <option value="2">Desactivada</option>
+                            </select>
                             <input type="text" className="form-control" placeholder="Sector" />
-                            <input type="text" className="form-control" placeholder="IP"></input>
                         </div>
 
                         <div className="input-group input-group-sm mb-2">
                             <input type="text" className="form-control" placeholder="Código" />
+                            <input type="text" className="form-control" placeholder="IP"></input>
+
+                        </div>
+
+                        <div className="input-group input-group-sm mb-2">
                             <input type="text" className="form-control" placeholder="Proveedor"></input>
                         </div>
 
@@ -89,23 +92,6 @@ export const CelularesPage = () => {
                     </button>
                 </Modal.Footer>
             </Modal>
-
-            <Row xs={1} md={2} lg={3} className="g-4 text-center m-2">
-                {Array.from({ length: 12 }).map((_, idx) => (
-                    <Col>
-                        <Card key={idx}>
-                            <Card.Body>
-                                <ListGroup variant="flush">
-                                    <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                                    <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                                    <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                                    <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                                </ListGroup>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
         </>
     )
 }

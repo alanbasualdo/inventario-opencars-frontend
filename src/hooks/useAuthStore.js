@@ -4,7 +4,7 @@ import { onChecking, onLogin, onLogout } from "../store/authSlice"
 
 export const useAuthStore = () => {
 
-    const { status, email, password } = useSelector(state => state.auth)
+    const { status, email } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     const startLogin = async ({ email, password }) => {
@@ -31,8 +31,8 @@ export const useAuthStore = () => {
                 })
                 return dispatch(onLogout())
             } else if (data.msg === 'LogOk') {
-                localStorage.setItem('token', data.token)
-                localStorage.setItem('token-init-date', new Date().getTime())
+                sessionStorage.setItem('token', data.token)
+                sessionStorage.setItem('token-init-date', new Date().getTime())
                 dispatch(onLogin(data))
             }
         } catch (error) {
@@ -72,22 +72,22 @@ export const useAuthStore = () => {
     }
 
     const checkAuth = async () => {
-        const token = localStorage.getItem('token')
+        const token = sessionStorage.getItem('token')
         if (!token) return dispatch(onLogout())
         try {
-            const { data } = await inventarioApi.get('/renew')
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('token-init-date', new Date().getTime())
+            const { data } = await inventarioApi.get('/login/renew')
+            sessionStorage.setItem('token', data.token)
+            sessionStorage.setItem('token-init-date', new Date().getTime())
             dispatch(onLogin(data))
         } catch (error) {
             console.log(error)
-            localStorage.clear()
+            sessionStorage.clear()
             dispatch(onLogout())
         }
     }
 
     const startLogout = () => {
-        localStorage.clear()
+        sessionStorage.clear()
         dispatch(onLogout())
     }
 
