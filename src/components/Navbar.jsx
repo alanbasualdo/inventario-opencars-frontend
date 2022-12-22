@@ -29,11 +29,11 @@ export const Navbar = () => {
     }
 
     return (
-        <nav className="navbar">
+        <nav className="navbar mt-2">
             <form className="container-fluid justify-content-center">
                 <NavLink to="/impresoras" className="btn btn-sm btn-outline-light me-2" type="button">Impresoras</NavLink>
                 <NavLink to="/celulares" className="btn btn-sm btn-outline-light me-2" type="button">Celulares</NavLink>
-                <NavLink to="/config" className="btn btn-sm btn-outline-primary me-2" type="button"><i className="bi bi-gear"></i></NavLink>
+                <NavLink to="/config" className="btn btn-sm btn-outline-secondary me-2" type="button"><i className="bi bi-gear"></i></NavLink>
                 <button className="btn btn-sm btn-outline-danger" type="button" onClick={logOut}>Salir</button>
             </form>
         </nav>

@@ -10,6 +10,7 @@ export const useImpStore = () => {
     const startGetImp = async () => {
         try {
             const { data } = await inventarioApi.get('/impresoras')
+            const total = data.total
             const impresoras = data.impresoras
             dispatch(onShow(impresoras))
         }
@@ -18,9 +19,39 @@ export const useImpStore = () => {
         }
     }
 
+    const startPostImp = async ({ ciudad, sucursal, marca, modelo, toner,
+        propia, estado, sector, codigo, ip, proveedor, comentarios }) => {
+
+        try {
+            const { data } = await inventarioApi.post('/impresoras', {
+                ciudad, sucursal, marca, modelo, toner,
+                propia, estado, sector, codigo, ip, proveedor, comentarios
+            })
+
+            if (data.msg === 'ok') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Impresora guardada con éxito.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else if (data.msg === 'existe') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'La impresora ya existe en la base de datos.'
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return {
         impresoras,
 
-        startGetImp
+        startGetImp,
+        startPostImp
     }
 }
