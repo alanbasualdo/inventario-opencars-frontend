@@ -54,7 +54,6 @@ export const ImpresorasForm = ({ submit }) => {
                     <Modal.Title>Agregar impresora</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-
                     <form onSubmit={submit}>
 
                         <div className="input-group input-group-sm mb-2">
@@ -153,7 +152,7 @@ export const ImpresorasForm = ({ submit }) => {
                             >
                                 <option defaultValue="">Estado...</option>
                                 <option value="Activa">Activa</option>
-                                <option value="Desactivada">Desactivada</option>
+                                <option value="Inactiva">Inactiva</option>
                             </select>
                             <input
                                 type="text"
@@ -220,15 +219,12 @@ export const ImpresorasForm = ({ submit }) => {
                         </div>
 
                     </form>
-
                 </Modal.Body>
-
                 <Modal.Footer>
                     <button className='btn btn-sm btn-outline-danger' onClick={handleClose}>
                         Cancelar
                     </button>
                 </Modal.Footer>
-
             </Modal>
         </>
     )

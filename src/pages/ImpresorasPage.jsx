@@ -7,15 +7,48 @@ import { ImpresorasForm } from '../components/ImpresorasForm'
 
 export const ImpresorasPage = () => {
 
-    const { impresoras, startGetImp } = useImpStore()
+    const { impresoras, startGetImp, startDeleteImp } = useImpStore()
     const [busqueda, setBusqueda] = useState("")
     const [parametro, setParametro] = useState("")
+    const [edit, setEdit] = useState("")
 
     const submit = (e) => {
     }
 
     const search = (e) => {
         setBusqueda(e.target.value)
+    }
+
+    const editBtn = (id) => {
+        setEdit(true)
+        setIdCard(id)
+    }
+
+    const closeEdit = () => {
+        setEdit(false)
+        setIdCard("")
+    }
+
+    const deleteImp = (id) => {
+        Swal.fire({
+            title: 'Desea borrar impresora?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, borrar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    position: 'top',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                startDeleteImp(id)
+            }
+        })
     }
 
     let results = impresoras
@@ -47,13 +80,13 @@ export const ImpresorasPage = () => {
     }, [submit])
 
     let activas = 0
-    let desactivadas = 0
+    let inactivas = 0
 
     impresoras.map(i => {
         if (i.estado === 'Activa') {
             activas++
-        } else if (i.estado === 'Desactivada') {
-            desactivadas++
+        } else if (i.estado === 'Inactiva') {
+            inactivas++
         }
     })
 
@@ -62,7 +95,7 @@ export const ImpresorasPage = () => {
             <ImpresorasForm onAction={submit} />
 
             <div className='text-center'>
-                <h3>Impresoras <b className='text-success' title='Impresoras activas'>|{activas}|</b> <b className='text-secondary' title='Impresoras desactivadas'>|{desactivadas}|</b></h3>
+                <h3>Impresoras <b className='text-success' title='Impresoras activas'>|{activas}|</b> <b className='text-secondary' title='Impresoras inactivas'>|{inactivas}|</b></h3>
             </div>
 
             <div className="col-12 d-flex justify-content-center align-items-center">
@@ -97,32 +130,67 @@ export const ImpresorasPage = () => {
                 {Array.from(results).map(impresora => (
                     <Col key={impresora.uid}>
                         <Card>
-                            <Card.Body>
-                                <ListGroup variant="flush">
-                                    <div>
+                            <form>
+                                <Card.Body>
+                                    <ListGroup variant="flush">
+                                        <div>
+                                            {
+                                                (impresora.estado === 'Activa')
+                                                    ? <Badge type='button' bg="success mb-2 p-2 me-2 pe-4 ps-4" pill>Activa</Badge>
+                                                    : <Badge type='button' bg="secondary mb-2 p-2 me-2 pe-4 ps-4" pill>Inactiva</Badge>
+                                            }
+                                            {
+                                                edit
+                                                    ? <>
+                                                        <Badge type='button' bg="dark mb-2 p-2 me-2" pill onClick={() => closeEdit()} title='Cancelar'><i className="bi bi-x"></i></Badge>
+                                                        <Badge type='button' bg="primary mb-2 p-2" pill title='Guardar'><i className="bi bi-check-lg"></i></Badge>
+                                                    </>
+                                                    : <>
+                                                        <Badge type='button' bg="dark mb-2 p-2 me-2" pill onClick={() => editBtn(impresora.uid)}><i className="bi bi-pencil-fill"></i></Badge>
+                                                        <Badge type='button' bg="danger mb-2 p-2" pill onClick={() => deleteImp(impresora.uid)}><i className="bi bi-trash-fill"></i></Badge>
+                                                    </>
+                                            }
+                                        </div>
+                                        <ListGroup.Item variant="light">Ciudad: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.ciudad} value={impresora.ciudad} />
+                                            : <b>{impresora.ciudad}</b>}
+                                        </ListGroup.Item>
+                                        <ListGroup.Item variant="light">Sucursal: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.sucursal} value={impresora.sucursal} />
+                                            : <b>{impresora.sucursal}</b>}
+                                        </ListGroup.Item>
+                                        <ListGroup.Item variant="light">Marca: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.marca} value={impresora.marca} />
+                                            : <b>{impresora.marca}</b>}</ListGroup.Item>
+                                        <ListGroup.Item variant="light">Modelo: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.modelo} value={impresora.modelo} />
+                                            : <b>{impresora.modelo}</b>}</ListGroup.Item>
+                                        <ListGroup.Item variant="light">Tóner: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.toner} value={impresora.toner} />
+                                            : <b>{impresora.toner}</b>}</ListGroup.Item>
+                                        <ListGroup.Item variant="light">Propiedad: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.propia} value={impresora.propia} />
+                                            : <b>{impresora.propia}</b>}</ListGroup.Item>
+                                        <ListGroup.Item variant="light">Sector: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.sector} value={impresora.sector} />
+                                            : <b>{impresora.sector}</b>}</ListGroup.Item>
+                                        <ListGroup.Item variant="light">IP: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.ip} value={impresora.ip} />
+                                            : <b>{impresora.ip}</b>}</ListGroup.Item>
+                                        <ListGroup.Item variant="light">Código: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.codigo} value={impresora.codigo} />
+                                            : <b>{impresora.codigo}</b>}</ListGroup.Item>
+                                        <ListGroup.Item variant="light">Proveedor: {edit
+                                            ? <input type="text" className="form-control" placeholder={impresora.proveedor} value={impresora.proveedor} />
+                                            : <b>{impresora.proveedor}</b>}</ListGroup.Item>
                                         {
-                                            (impresora.estado === 'Activa')
-                                                ? <Badge type='button' bg="success mb-2 p-2 me-2 pe-5 ps-5" pill>Activa</Badge>
-                                                : <Badge type='button' bg="secondary mb-2 p-2 me-2 pe-5 ps-5" pill>Desactivada</Badge>
+                                            (impresora.comentarios !== '') && <ListGroup.Item variant="light">Comentarios: {edit
+                                                ? <input type="text" className="form-control" placeholder={impresora.comentarios} value={impresora.comentarios} />
+                                                : <b>{impresora.comentarios}</b>}</ListGroup.Item>
                                         }
-                                        <Badge type='button' bg="dark mb-2 p-2 me-2" pill><i className="bi bi-pencil-fill"></i></Badge>
-                                        <Badge type='button' bg="danger mb-2 p-2" pill><i className="bi bi-trash-fill"></i></Badge>
-                                    </div>
-                                    <ListGroup.Item action variant="light">Ciudad: <b>{impresora.ciudad}</b></ListGroup.Item>
-                                    <ListGroup.Item action variant="light">Sucursal: <b>{impresora.sucursal}</b></ListGroup.Item>
-                                    <ListGroup.Item action variant="light">Marca: <b>{impresora.marca}</b></ListGroup.Item>
-                                    <ListGroup.Item action variant="light">Modelo: <b>{impresora.modelo}</b></ListGroup.Item>
-                                    <ListGroup.Item action variant="light">Tóner: <b>{impresora.toner}</b></ListGroup.Item>
-                                    <ListGroup.Item action variant="light">Propiedad: <b>{impresora.propia}</b></ListGroup.Item>
-                                    <ListGroup.Item action variant="light">Sector: <b>{impresora.sector}</b></ListGroup.Item>
-                                    <ListGroup.Item action variant="light">IP: <b>{impresora.ip}</b></ListGroup.Item>
-                                    <ListGroup.Item action variant="light">Código: <b>{impresora.codigo}</b></ListGroup.Item>
-                                    <ListGroup.Item action variant="light">Proveedor: <b>{impresora.proveedor}</b></ListGroup.Item>
-                                    {
-                                        (impresora.comentarios !== '') && <ListGroup.Item action variant="light">Comentarios: <b>{impresora.comentarios}</b></ListGroup.Item>
-                                    }
-                                </ListGroup>
-                            </Card.Body>
+                                    </ListGroup>
+                                </Card.Body>
+                            </form>
                         </Card>
                     </Col>
                 ))}
