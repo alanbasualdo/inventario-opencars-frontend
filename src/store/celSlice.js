@@ -1,23 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const impSlice = createSlice({
-    name: 'imp',
+export const celSlice = createSlice({
+    name: 'cel',
     initialState: {
         status: null,
-        impresoras: []
+        celulares: []
     },
     reducers: {
         onLoad: (state) => {
             state.status = 'loading'
-            state.impresoras = {}
+            state.celulares = {}
         },
         onShow: (state, { payload = [] }) => {
             state.status = 'ready'
-            state.impresoras = payload
+            state.celulares = payload
         }
     },
 })
 
-export const { onLoad, onShow } = impSlice.actions
+export const { onLoad, onShow } = celSlice.actions
 
-export default impSlice
+export default celSlice

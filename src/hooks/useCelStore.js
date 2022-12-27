@@ -1,29 +1,28 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { onShow } from '../store/impSlice'
+import { onShow } from '../store/celSlice'
 import inventarioApi from "../api/inventarioApi"
 
-export const useImpStore = () => {
+export const useCelStore = () => {
 
     const dispatch = useDispatch()
-    const { impresoras } = useSelector(state => state.imp)
+    const { celulares } = useSelector(state => state.cel)
 
-    const startGetImp = async () => {
+    const startGetCel = async () => {
         try {
-            const { data } = await inventarioApi.get('/impresoras')
-            const total = data.total
-            const impresoras = data.impresoras
-            dispatch(onShow(impresoras))
+            const { data } = await inventarioApi.get('/celulares')
+            const celulares = data.celulares
+            dispatch(onShow(celulares))
         }
         catch (error) {
             console.log(error)
         }
     }
 
-    const startPostImp = async ({ ciudad, sucursal, marca, modelo, toner,
+    const startPostCel = async ({ ciudad, sucursal, marca, modelo, toner,
         propia, estado, sector, codigo, ip, proveedor, comentarios }) => {
 
         try {
-            const { data } = await inventarioApi.post('/impresoras', {
+            const { data } = await inventarioApi.post('/celulares', {
                 ciudad, sucursal, marca, modelo, toner,
                 propia, estado, sector, codigo, ip, proveedor, comentarios
             })
@@ -32,7 +31,7 @@ export const useImpStore = () => {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Impresora guardada con éxito.',
+                    title: 'Celular guardada con éxito.',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -40,7 +39,7 @@ export const useImpStore = () => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: `Ya existe impresora con el ip ${ip}`
+                    text: `Ya existe celular con el ip ${ip}`
                 })
             }
         } catch (error) {
@@ -48,14 +47,14 @@ export const useImpStore = () => {
         }
     }
 
-    const startDeleteImp = async (id) => {
+    const startDeleteCel = async (id) => {
         try {
-            const { data } = await inventarioApi.delete(`/impresoras/${id}`)
+            const { data } = await inventarioApi.delete(`/celulares/${id}`)
             if (data.msg === 'ok') {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Impresora borrada con éxito.',
+                    title: 'Celular borrado con éxito.',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -65,7 +64,7 @@ export const useImpStore = () => {
         }
     }
 
-    const startPutImp = async ({ ciudad, sucursal, marca, modelo, toner,
+    const startPutCel = async ({ ciudad, sucursal, marca, modelo, toner,
         propia, sector, codigo, ip, proveedor, comentarios }) => {
 
         console.log({
@@ -75,11 +74,11 @@ export const useImpStore = () => {
     }
 
     return {
-        impresoras,
+        celulares,
 
-        startGetImp,
-        startPostImp,
-        startDeleteImp,
-        startPutImp
+        startGetCel,
+        startPostCel,
+        startDeleteCel,
+        startPutCel
     }
 }

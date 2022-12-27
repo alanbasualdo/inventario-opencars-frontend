@@ -1,40 +1,39 @@
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { useForm } from '../hooks/useForm'
-import { useImpStore } from '../hooks/useImpStore'
+import { useCelStore } from "../hooks/useCelStore"
+import { useForm } from "../hooks/useForm"
 
 let formFields = {
     ciudad: '',
     sucursal: '',
     marca: '',
     modelo: '',
-    toner: '',
-    propia: '',
+    numero: '',
+    usuario: '',
     estado: '',
-    sector: '',
-    codigo: '',
-    ip: '',
-    proveedor: '',
+    corporativo: '',
+    facturacion: '',
     comentarios: ''
 }
 
-export const ImpresorasForm = ({ submit }) => {
+export const CelularlesForm = ({ submit }) => {
 
-    const { startPostImp } = useImpStore()
+    const { startPostCel } = useCelStore()
     const [show, setShow] = useState(false)
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
 
-    const { ciudad, sucursal, marca, modelo, toner,
-        propia, estado, sector,
-        codigo, ip, proveedor, comentarios, onInputChange } = useForm(formFields)
+    const { ciudad, sucursal, marca, modelo, numero,
+        usuario, estado, corporativo,
+        facturacion, comentarios, onInputChange } = useForm(formFields)
 
     submit = (e) => {
         e.preventDefault()
 
-        startPostImp({
-            ciudad, sucursal, marca, modelo, toner,
-            propia, estado, sector, codigo, ip, proveedor, comentarios
+        startPostCel({
+            ciudad, sucursal, marca, modelo, numero,
+            usuario, estado, corporativo,
+            facturacion, comentarios
         })
 
         formFields = {
@@ -42,13 +41,11 @@ export const ImpresorasForm = ({ submit }) => {
             sucursal: '',
             marca: '',
             modelo: '',
-            toner: '',
-            propia: '',
+            numero: '',
+            usuario: '',
             estado: '',
-            sector: '',
-            codigo: '',
-            ip: '',
-            proveedor: '',
+            corporativo: '',
+            facturacion: '',
             comentarios: ''
         }
     }
@@ -57,7 +54,7 @@ export const ImpresorasForm = ({ submit }) => {
         <>
             <nav className="navbar mb-2 mt-2">
                 <form className="container-fluid justify-content-center">
-                    <button className="btn btn-outline-primary" type="button" title='Agregar impresora' onClick={handleShow}><i className="bi bi-plus-lg"></i></button>
+                    <button className="btn btn-outline-primary" type="button" title='Agregar celular' onClick={handleShow}><i className="bi bi-plus-lg"></i></button>
                 </form>
             </nav>
 
@@ -66,7 +63,7 @@ export const ImpresorasForm = ({ submit }) => {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Agregar impresora</Modal.Title>
+                    <Modal.Title>Agregar celular</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={submit}>
@@ -108,6 +105,18 @@ export const ImpresorasForm = ({ submit }) => {
 
                         <div className="input-group input-group-sm mb-2">
                             <select
+                                className="form-select"
+                                name='facturacion'
+                                value={facturacion}
+                                onChange={onInputChange}
+                                required
+                            >
+                                <option defaultValue="">Facturación...</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Movistar">Movistar</option>
+                                <option value="Claro">Claro</option>
+                            </select>
+                            <select
                                 name='marca'
                                 className="form-select"
                                 value={marca}
@@ -116,13 +125,14 @@ export const ImpresorasForm = ({ submit }) => {
                             >
                                 <option defaultValue="">Marca...</option>
                                 <option value="Samsung">Samsung</option>
-                                <option value="Lexmark">Lexmark</option>
-                                <option value="HP">HP</option>
-                                <option value="Ricoh">Ricoh</option>
-                                <option value="Brother">Brother</option>
-                                <option value="Canon">Canon</option>
+                                <option value="Lexmark">TCL</option>
+                                <option value="HP">Apple</option>
+                                <option value="Ricoh">Nokia</option>
+                                <option value="Brother">Motorola</option>
                             </select>
+                        </div>
 
+                        <div className="input-group input-group-sm mb-2">
                             <input
                                 type="text"
                                 className="form-control"
@@ -132,29 +142,15 @@ export const ImpresorasForm = ({ submit }) => {
                                 onChange={onInputChange}
                                 required
                             />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-2">
-                            <select
-                                className="form-select"
-                                name='toner'
-                                value={toner}
-                                onChange={onInputChange}
-                            >
-                                <option defaultValue="">Tóner...</option>
-                                <option value="MGN-CF-217A">MGN-CF-217A</option>
-                            </select>
-                            <select
-                                className="form-select"
-                                name='propia'
-                                value={propia}
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Usuario"
+                                name='usuario'
+                                value={usuario}
                                 onChange={onInputChange}
                                 required
-                            >
-                                <option defaultValue="">Propiedad...</option>
-                                <option value="Alquilada">Alquilada</option>
-                                <option value="Propia">Propia</option>
-                            </select>
+                            />
                         </div>
 
                         <div className="input-group input-group-sm mb-2">
@@ -166,48 +162,31 @@ export const ImpresorasForm = ({ submit }) => {
                                 required
                             >
                                 <option defaultValue="">Estado...</option>
-                                <option value="Activa">Activa</option>
-                                <option value="Inactiva">Inactiva</option>
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
                             </select>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Sector"
-                                name='sector'
-                                value={sector}
+                            <select
+                                className="form-select"
+                                name='corporativo'
+                                value={corporativo}
                                 onChange={onInputChange}
                                 required
-                            />
+                            >
+                                <option defaultValue="">Corporativo...</option>
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
                         </div>
 
                         <div className="input-group input-group-sm mb-2">
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Código"
-                                name='codigo'
-                                value={codigo}
+                                placeholder="Número"
+                                name='numero'
+                                value={numero}
                                 onChange={onInputChange}
-                            />
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="IP"
-                                name='ip'
-                                value={ip}
-                                onChange={onInputChange}
-                            />
-
-                        </div>
-
-                        <div className="input-group input-group-sm mb-2">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Proveedor"
-                                name='proveedor'
-                                value={proveedor}
-                                onChange={onInputChange}
+                                required
                             />
                         </div>
 
