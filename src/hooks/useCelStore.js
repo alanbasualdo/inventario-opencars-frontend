@@ -18,20 +18,20 @@ export const useCelStore = () => {
         }
     }
 
-    const startPostCel = async ({ ciudad, sucursal, marca, modelo, toner,
-        propia, estado, sector, codigo, ip, proveedor, comentarios }) => {
+    const startPostCel = async ({ ciudad, sucursal, facturacion, marca, modelo,
+        usuario, estado, corporativo, numero, comentarios }) => {
 
         try {
             const { data } = await inventarioApi.post('/celulares', {
-                ciudad, sucursal, marca, modelo, toner,
-                propia, estado, sector, codigo, ip, proveedor, comentarios
+                ciudad, sucursal, facturacion, marca, modelo,
+                usuario, estado, corporativo, numero, comentarios
             })
 
             if (data.msg === 'ok') {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Celular guardada con éxito.',
+                    title: 'Celular guardado con éxito.',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -39,7 +39,7 @@ export const useCelStore = () => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: `Ya existe celular con el ip ${ip}`
+                    text: `Ya existe celular con el número ${numero}`
                 })
             }
         } catch (error) {

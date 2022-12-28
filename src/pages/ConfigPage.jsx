@@ -1,7 +1,11 @@
+import { RegisterPage } from "./RegisterPage"
+import '../styles/ConfigPage.css'
+
 export const ConfigPage = () => {
+
   return (
-    <div className='text-center'>
-      <h3>Configuración</h3>
-    </div>
+    <>
+      <RegisterPage />
+    </>
   )
 }

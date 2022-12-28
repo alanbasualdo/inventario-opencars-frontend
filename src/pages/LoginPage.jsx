@@ -1,7 +1,6 @@
 import '../styles/LoginPage.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
 import { useState } from 'react'
 import { useAuthStore } from '../hooks/useAuthStore'
 
@@ -69,7 +68,6 @@ export const LoginPage = () => {
                             </button>
                             : <button className="btn btn-outline-primary me-2" type="submit">Ingresar</button>
                     }
-                    <Link to='/register' className="btn btn-outline-secondary">Crear una cuenta</Link>
                 </div>
             </form>
         </div>

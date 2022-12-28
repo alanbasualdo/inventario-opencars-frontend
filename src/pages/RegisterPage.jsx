@@ -1,7 +1,6 @@
 import '../styles/RegisterPage.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
 import { useState } from 'react'
 import { useAuthStore } from '../hooks/useAuthStore'
 
@@ -44,7 +43,7 @@ export const RegisterPage = () => {
     return (
         <div className="register">
             <form onSubmit={registerSubmit}>
-                <h1 className='text-center mb-4'>Registro</h1>
+                <h1 className='text-center mb-4'>Registrar usuario</h1>
                 <div className="input-group mb-3">
                     <span className="input-group-text">Email</span>
                     <input
@@ -120,14 +119,13 @@ export const RegisterPage = () => {
                     </button>
                 </div>
                 <div className="text-center mt-4">
-                    <Link to='/login' className="btn btn-outline-secondary me-2">Volver</Link>
                     {
                         (status === 'checking')
                             ? <button className="btn btn-outline-primary me-2" type="submit">
                                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             </button>
                             : <button className="btn btn-outline-primary" type="submit" disabled={password.length < 5 && password.length != 0}>
-                                Registrarme
+                                Registrar
                             </button>
                     }
                 </div>

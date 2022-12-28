@@ -148,9 +148,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
                                                         <input type="text"
                                                             className="form-control"
                                                             placeholder={celular.usuario}
-                                                            value={toner}
+                                                            value={usuario}
                                                             onChange={onInputChange}
-                                                            name='toner'
+                                                            name='usuario'
                                                         />
                                                     </div>
                                                     : <b>{celular.usuario}</b>}</ListGroup.Item>
@@ -160,9 +160,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
                                                             type="text"
                                                             className="form-control"
                                                             placeholder={celular.corporativo}
-                                                            value={propia}
+                                                            value={corporativo}
                                                             onChange={onInputChange}
-                                                            name='propia'
+                                                            name='corporativo'
                                                         />
                                                     </div>
                                                     : <b>{celular.corporativo}</b>}</ListGroup.Item>
@@ -172,9 +172,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
                                                             type="text"
                                                             className="form-control"
                                                             placeholder={celular.numero}
-                                                            value={sector}
+                                                            value={numero}
                                                             onChange={onInputChange}
-                                                            name='sector'
+                                                            name='numero'
                                                         />
                                                     </div>
                                                     : <b>{celular.numero}</b>}</ListGroup.Item>
@@ -200,11 +200,12 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
                                         </>
                                         : <><ListGroup.Item variant="light">Ciudad: <b>{celular.ciudad}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Sucursal: <b>{celular.sucursal}</b></ListGroup.Item>
+                                            <ListGroup.Item variant="light">Facturación: <b>{celular.facturacion}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Marca: <b>{celular.marca}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Modelo: <b>{celular.modelo}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Usuario: <b>{celular.usuario}</b></ListGroup.Item>
-                                            <ListGroup.Item variant="light">Propiedad: <b>{celular.corporativo}</b></ListGroup.Item>
-                                            <ListGroup.Item variant="light">Sector: <b>{celular.numero}</b></ListGroup.Item>
+                                            <ListGroup.Item variant="light">Corporativo: <b>{celular.corporativo}</b></ListGroup.Item>
+                                            <ListGroup.Item variant="light">Número: <b>{celular.numero}</b></ListGroup.Item>
                                             {
                                                 (celular.comentarios !== '') && <ListGroup.Item variant="light">Comentarios: <b>{celular.comentarios}</b></ListGroup.Item>
                                             }

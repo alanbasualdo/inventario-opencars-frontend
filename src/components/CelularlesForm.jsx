@@ -31,9 +31,8 @@ export const CelularlesForm = ({ submit }) => {
         e.preventDefault()
 
         startPostCel({
-            ciudad, sucursal, marca, modelo, numero,
-            usuario, estado, corporativo,
-            facturacion, comentarios
+            ciudad, sucursal, facturacion, marca, modelo,
+            usuario, estado, corporativo, numero, comentarios
         })
 
         formFields = {
