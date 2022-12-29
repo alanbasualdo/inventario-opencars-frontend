@@ -4,7 +4,7 @@ import { onChecking, onLogin, onLogout } from "../store/authSlice"
 
 export const useAuthStore = () => {
 
-    const { status, email } = useSelector(state => state.auth)
+    const { status, email, usuarios } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     const startLogin = async ({ email, password }) => {
@@ -71,6 +71,17 @@ export const useAuthStore = () => {
         }
     }
 
+    const startGetUser = async () => {
+        try {
+            const { data } = await inventarioApi.get('/register')
+            const usuarios = data.usuarios
+            dispatch(onShow(usuarios))
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     const checkAuth = async () => {
         const token = sessionStorage.getItem('token')
         if (!token) return dispatch(onLogout())
@@ -95,11 +106,13 @@ export const useAuthStore = () => {
         // Propiedades
         status,
         email,
+        usuarios,
 
         // Métodos
         startLogin,
         startRegister,
         checkAuth,
-        startLogout
+        startLogout,
+        startGetUser
     }
 }

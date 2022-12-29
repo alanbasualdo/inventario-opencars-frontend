@@ -3,6 +3,7 @@ import { Badge, Card, Col, ListGroup, Row } from 'react-bootstrap'
 import { useForm } from "../hooks/useForm"
 
 let formFields = {
+    uid: '',
     ciudad: '',
     sucursal: '',
     marca: '',
@@ -20,7 +21,7 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
     const [edit, setEdit] = useState("")
     const [editId, setEditId] = useState("")
 
-    const { ciudad, sucursal, marca, modelo, numero,
+    const { uid, ciudad, sucursal, marca, modelo, numero,
         usuario, estado, corporativo,
         facturacion, comentarios, onInputChange } = useForm(formFields)
 
@@ -55,10 +56,10 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
         })
     }
 
-    submit = (e) => {
+    submit = (uid, e) => {
         e.preventDefault()
         startPutCel({
-            ciudad, sucursal, marca, modelo, numero,
+            uid, ciudad, sucursal, marca, modelo, numero,
             usuario, estado, corporativo,
             facturacion, comentarios
         })
@@ -92,7 +93,7 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
                                 {
                                     (editId === celular.uid && edit)
                                         ? <>
-                                            <form onSubmit={submit}>
+                                            <form onSubmit={submit(celular.uid, e)}>
                                                 <ListGroup.Item variant="light">Ciudad: {edit
                                                     ? <div className='input-group input-group-sm'>
                                                         <input
@@ -198,7 +199,8 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
                                                 </div>
                                             </form>
                                         </>
-                                        : <><ListGroup.Item variant="light">Ciudad: <b>{celular.ciudad}</b></ListGroup.Item>
+                                        : <>
+                                            <ListGroup.Item variant="light">Ciudad: <b>{celular.ciudad}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Sucursal: <b>{celular.sucursal}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Facturación: <b>{celular.facturacion}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Marca: <b>{celular.marca}</b></ListGroup.Item>

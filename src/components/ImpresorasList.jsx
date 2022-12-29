@@ -234,7 +234,8 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                 </div>
                                             </form>
                                         </>
-                                        : <><ListGroup.Item variant="light">Ciudad: <b>{impresora.ciudad}</b></ListGroup.Item>
+                                        : <>
+                                            <ListGroup.Item variant="light">Ciudad: <b>{impresora.ciudad}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Sucursal: <b>{impresora.sucursal}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Marca: <b>{impresora.marca}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Modelo: <b>{impresora.modelo}</b></ListGroup.Item>

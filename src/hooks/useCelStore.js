@@ -64,11 +64,13 @@ export const useCelStore = () => {
         }
     }
 
-    const startPutCel = async ({ ciudad, sucursal, marca, modelo, toner,
-        propia, sector, codigo, ip, proveedor, comentarios }) => {
+    const startPutCel = async ({
+        uid, ciudad, sucursal, marca, modelo, toner,
+        propia, sector, codigo, ip, proveedor, comentarios
+    }) => {
 
         console.log({
-            ciudad, sucursal, marca, modelo, toner,
+            uid, ciudad, sucursal, marca, modelo, toner,
             propia, sector, codigo, ip, proveedor, comentarios
         })
     }
