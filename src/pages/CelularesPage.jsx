@@ -1,8 +1,8 @@
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { useEffect, useState } from 'react'
 import { Badge } from 'react-bootstrap'
-import { CelularesList } from '../components/CelularesList'
-import { CelularlesForm } from '../components/CelularlesForm'
+import { CelularesList } from '../components/Celulares/CelularesList'
+import { CelularlesForm } from '../components/Celulares/CelularlesForm'
 import { useCelStore } from '../hooks/useCelStore'
 
 export const CelularesPage = () => {
@@ -37,7 +37,7 @@ export const CelularesPage = () => {
 
     useEffect(() => {
         startGetCel()
-    }, [submit])
+    }, [celulares])
 
     let activos = 0
     let inactivos = 0
@@ -54,7 +54,7 @@ export const CelularesPage = () => {
         <>
             <CelularlesForm submit={submit} />
 
-            < div className='text-center'>
+            <div className='text-center'>
                 <h3>Celulares <b className='text-success' title='Celulares activos'>|{activos}|</b> <b className='text-secondary' title='Celulares inactivos'>|{inactivos}|</b></h3>
             </div>
 

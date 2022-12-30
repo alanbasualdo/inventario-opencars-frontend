@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Badge, Card, Col, ListGroup, Row } from 'react-bootstrap'
-import { useForm } from '../hooks/useForm'
+import { useForm } from '../../hooks/useForm'
 
-const formFields = {
+let formFields = {
+    uid: '',
     ciudad: '',
     sucursal: '',
     marca: '',
@@ -22,8 +23,8 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
     const [edit, setEdit] = useState("")
     const [editId, setEditId] = useState("")
 
-    const { ciudad, sucursal, marca, modelo, toner,
-        propia, sector, codigo, ip, proveedor, comentarios, onInputChange } = useForm(formFields)
+    let { uid, ciudad, sucursal, marca, modelo, toner,
+        propia, estado, sector, codigo, ip, proveedor, comentarios, onInputChange } = useForm(formFields)
 
     const editBtn = (id) => {
         setEdit(true)
@@ -59,23 +60,26 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
     submit = (e) => {
         e.preventDefault()
         startPutImp({
-            ciudad, sucursal, marca, modelo, toner,
-            propia, sector, codigo, ip, proveedor, comentarios
+            uid, ciudad, sucursal, marca, modelo, toner,
+            propia, estado, sector, codigo, ip, proveedor, comentarios
         })
+
+        setEdit(false)
     }
 
     return (
-        <Row xs={1} sm={2} md={3} lg={4} className="g-4 text-center m-2">
+        <Row xs={1} sm={2} md={3} lg={4} className="g-4 text-center m-2 animate__animated animate__fadeIn">
             {Array.from(results).map(impresora => (
                 <Col key={impresora.uid}>
+                    {uid = impresora.uid}
                     <Card>
                         <Card.Body>
                             <ListGroup variant="flush">
                                 <div>
                                     {
                                         (impresora.estado === 'Activa')
-                                            ? <Badge type='button' bg="success mb-2 p-2 me-2 pe-4 ps-4" pill>Activa</Badge>
-                                            : <Badge type='button' bg="secondary mb-2 p-2 me-2 pe-4 ps-4" pill>Inactiva</Badge>
+                                            ? <Badge bg="success mb-2 p-2 me-2 pe-4 ps-4" pill>Activa</Badge>
+                                            : <Badge bg="secondary mb-2 p-2 me-2 pe-4 ps-4" pill>Inactiva</Badge>
                                     }
                                     {
                                         (editId === impresora.uid && edit)
@@ -166,6 +170,20 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                         />
                                                     </div>
                                                     : <b>{impresora.propia}</b>}</ListGroup.Item>
+                                                <ListGroup.Item variant="light">Estado: {edit
+                                                    ? <div className='input-group input-group-sm'>
+                                                        <select
+                                                            className="form-select"
+                                                            onChange={onInputChange}
+                                                            name='estado'
+                                                            required
+                                                        >
+                                                            <option defaultValue="">Estado...</option>
+                                                            <option value="Activo">Activa</option>
+                                                            <option value="Inactivo">Inactiva</option>
+                                                        </select>
+                                                    </div>
+                                                    : <b>{celular.usuario}</b>}</ListGroup.Item>
                                                 <ListGroup.Item variant="light">Sector: {edit
                                                     ? <div className='input-group input-group-sm'>
                                                         <input
@@ -193,7 +211,7 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                 <ListGroup.Item variant="light">Código: {edit
                                                     ? <div className='input-group input-group-sm'>
                                                         <input
-                                                            type="text"
+                                                            type="number"
                                                             className="form-control"
                                                             placeholder={impresora.codigo}
                                                             value={codigo}
@@ -214,20 +232,18 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                         />
                                                     </div>
                                                     : <b>{impresora.proveedor}</b>}</ListGroup.Item>
-                                                {
-                                                    (impresora.comentarios !== '') && <ListGroup.Item variant="light">Comentarios: {edit
-                                                        ? <div className='input-group input-group-sm'>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                placeholder={impresora.comentarios}
-                                                                value={comentarios}
-                                                                onChange={onInputChange}
-                                                                name='comentarios'
-                                                            />
-                                                        </div>
-                                                        : <b>{impresora.comentarios}</b>}</ListGroup.Item>
-                                                }
+                                                <ListGroup.Item variant="light">Comentarios: {edit
+                                                    ? <div className='input-group input-group-sm'>
+                                                        <textarea
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder={impresora.comentarios}
+                                                            value={comentarios}
+                                                            onChange={onInputChange}
+                                                            name='comentarios'
+                                                        />
+                                                    </div>
+                                                    : <b>{impresora.comentarios}</b>}</ListGroup.Item>
                                                 <div className='mt-2'>
                                                     <Badge type='button' bg="dark p-2 me-2" pill onClick={() => closeEdit()} title='Cancelar'><i className="bi bi-x"></i></Badge>
                                                     <button type='submit' className='btn btn-sm btn-success'><i className="bi bi-check-lg"></i></button>

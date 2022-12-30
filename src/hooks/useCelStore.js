@@ -64,15 +64,27 @@ export const useCelStore = () => {
         }
     }
 
-    const startPutCel = async ({
-        uid, ciudad, sucursal, marca, modelo, toner,
-        propia, sector, codigo, ip, proveedor, comentarios
-    }) => {
+    const startPutCel = async ({ uid, ciudad, sucursal, facturacion, marca,
+        modelo, usuario, estado, corporativo, numero, comentarios }) => {
 
-        console.log({
-            uid, ciudad, sucursal, marca, modelo, toner,
-            propia, sector, codigo, ip, proveedor, comentarios
-        })
+        try {
+            const { data } = await inventarioApi.put(`/celulares/${uid}`, {
+                uid, ciudad, sucursal, facturacion, marca, modelo, usuario,
+                estado, corporativo, numero, comentarios
+            })
+
+            if (data.msg === 'ok') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Celular actualizado con éxito.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return {

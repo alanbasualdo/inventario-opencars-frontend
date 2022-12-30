@@ -4,7 +4,7 @@ import { onChecking, onLogin, onLogout } from "../store/authSlice"
 
 export const useAuthStore = () => {
 
-    const { status, email, usuarios } = useSelector(state => state.auth)
+    const { status, email } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     const startLogin = async ({ email, password }) => {
@@ -40,48 +40,6 @@ export const useAuthStore = () => {
         }
     }
 
-    const startRegister = async ({ email, password }) => {
-        dispatch(onChecking())
-        try {
-            const { data } = await inventarioApi.post('/register', { email, password })
-
-            if (data.msg === 'UserCrated') {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Usuario creado correctamente!',
-                    showConfirmButton: false,
-                    timer: 1000
-                })
-                setTimeout(() => {
-                    return window.location = "/login"
-                }, '1100')
-            } else if (data.msg === 'EmailAlreadyRegistered') {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'El email ya se encuentra registrado',
-                    showConfirmButton: false,
-                    timer: 1000
-                })
-                return dispatch(onLogout())
-            }
-        } catch (error) {
-            dispatch(onLogout())
-        }
-    }
-
-    const startGetUser = async () => {
-        try {
-            const { data } = await inventarioApi.get('/register')
-            const usuarios = data.usuarios
-            dispatch(onShow(usuarios))
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
-
     const checkAuth = async () => {
         const token = sessionStorage.getItem('token')
         if (!token) return dispatch(onLogout())
@@ -106,13 +64,10 @@ export const useAuthStore = () => {
         // Propiedades
         status,
         email,
-        usuarios,
 
         // Métodos
         startLogin,
-        startRegister,
         checkAuth,
-        startLogout,
-        startGetUser
+        startLogout
     }
 }

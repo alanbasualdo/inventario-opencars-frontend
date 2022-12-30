@@ -65,13 +65,27 @@ export const useImpStore = () => {
         }
     }
 
-    const startPutImp = async ({ ciudad, sucursal, marca, modelo, toner,
+    const startPutImp = async ({ uid, ciudad, sucursal, marca, modelo, toner,
         propia, sector, codigo, ip, proveedor, comentarios }) => {
 
-        console.log({
-            ciudad, sucursal, marca, modelo, toner,
-            propia, sector, codigo, ip, proveedor, comentarios
-        })
+        try {
+            const { data } = await inventarioApi.put(`/impresoras/${uid}`, {
+                ciudad, sucursal, marca, modelo, toner,
+                propia, sector, codigo, ip, proveedor, comentarios
+            })
+
+            if (data.msg === 'ok') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Impresora actualizada con éxito.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return {

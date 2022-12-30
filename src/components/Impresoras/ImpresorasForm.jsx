@@ -1,60 +1,55 @@
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { useCelStore } from "../hooks/useCelStore"
-import { useForm } from "../hooks/useForm"
+import { useForm } from '../../hooks/useForm'
+import { useImpStore } from '../../hooks/useImpStore'
 
 let formFields = {
     ciudad: '',
     sucursal: '',
     marca: '',
     modelo: '',
-    numero: '',
-    usuario: '',
+    toner: '',
+    propia: '',
     estado: '',
-    corporativo: '',
-    facturacion: '',
+    sector: '',
+    codigo: '',
+    ip: '',
+    proveedor: '',
     comentarios: ''
 }
 
-export const CelularlesForm = ({ submit }) => {
+export const ImpresorasForm = ({ submit }) => {
 
-    const { startPostCel } = useCelStore()
+    const { startPostImp } = useImpStore()
     const [show, setShow] = useState(false)
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
 
-    const { ciudad, sucursal, marca, modelo, numero,
-        usuario, estado, corporativo,
-        facturacion, comentarios, onInputChange } = useForm(formFields)
+    const { ciudad, sucursal, marca, modelo, toner,
+        propia, estado, sector,
+        codigo, ip, proveedor, comentarios, onInputChange, onResetForm } = useForm(formFields)
 
     submit = (e) => {
         e.preventDefault()
 
-        startPostCel({
-            ciudad, sucursal, facturacion, marca, modelo,
-            usuario, estado, corporativo, numero, comentarios
+        startPostImp({
+            ciudad, sucursal, marca, modelo, toner,
+            propia, estado, sector, codigo, ip, proveedor, comentarios
         })
 
-        formFields = {
-            ciudad: '',
-            sucursal: '',
-            marca: '',
-            modelo: '',
-            numero: '',
-            usuario: '',
-            estado: '',
-            corporativo: '',
-            facturacion: '',
-            comentarios: ''
-        }
+        onResetForm()
     }
 
     return (
         <>
             <nav className="navbar mb-2 mt-2">
-                <form className="container-fluid justify-content-center">
-                    <button className="btn btn-outline-primary" type="button" title='Agregar celular' onClick={handleShow}><i className="bi bi-plus-lg"></i></button>
-                </form>
+                <div className="container-fluid justify-content-center">
+                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar marca' onClick={handleShow}>Marca</button>
+                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar modelo' onClick={handleShow}>Modelo</button>
+                    <button className="btn btn-outline-success me-2" type="button" title='Agregar impresora' onClick={handleShow}><i className="bi bi-plus-lg"></i></button>
+                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar tóner' onClick={handleShow}>Tóner</button>
+                    <button className="btn btn-sm btn-outline-primary animate__animated animate__fadeIn" type="button" title='Agregar proveedor' onClick={handleShow}>Proveedor</button>
+                </div>
             </nav>
 
             <Modal show={show} onHide={handleClose}
@@ -62,7 +57,7 @@ export const CelularlesForm = ({ submit }) => {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Agregar celular</Modal.Title>
+                    <Modal.Title>Agregar impresora</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={submit}>
@@ -104,18 +99,6 @@ export const CelularlesForm = ({ submit }) => {
 
                         <div className="input-group input-group-sm mb-2">
                             <select
-                                className="form-select"
-                                name='facturacion'
-                                value={facturacion}
-                                onChange={onInputChange}
-                                required
-                            >
-                                <option defaultValue="">Facturación...</option>
-                                <option value="Personal">Personal</option>
-                                <option value="Movistar">Movistar</option>
-                                <option value="Claro">Claro</option>
-                            </select>
-                            <select
                                 name='marca'
                                 className="form-select"
                                 value={marca}
@@ -124,14 +107,13 @@ export const CelularlesForm = ({ submit }) => {
                             >
                                 <option defaultValue="">Marca...</option>
                                 <option value="Samsung">Samsung</option>
-                                <option value="Lexmark">TCL</option>
-                                <option value="HP">Apple</option>
-                                <option value="Ricoh">Nokia</option>
-                                <option value="Brother">Motorola</option>
+                                <option value="Lexmark">Lexmark</option>
+                                <option value="HP">HP</option>
+                                <option value="Ricoh">Ricoh</option>
+                                <option value="Brother">Brother</option>
+                                <option value="Canon">Canon</option>
                             </select>
-                        </div>
 
-                        <div className="input-group input-group-sm mb-2">
                             <input
                                 type="text"
                                 className="form-control"
@@ -141,15 +123,29 @@ export const CelularlesForm = ({ submit }) => {
                                 onChange={onInputChange}
                                 required
                             />
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Usuario"
-                                name='usuario'
-                                value={usuario}
+                        </div>
+
+                        <div className="input-group input-group-sm mb-2">
+                            <select
+                                className="form-select"
+                                name='toner'
+                                value={toner}
+                                onChange={onInputChange}
+                            >
+                                <option defaultValue="">Tóner...</option>
+                                <option value="MGN-CF-217A">MGN-CF-217A</option>
+                            </select>
+                            <select
+                                className="form-select"
+                                name='propia'
+                                value={propia}
                                 onChange={onInputChange}
                                 required
-                            />
+                            >
+                                <option defaultValue="">Propiedad...</option>
+                                <option value="Alquilada">Alquilada</option>
+                                <option value="Propia">Propia</option>
+                            </select>
                         </div>
 
                         <div className="input-group input-group-sm mb-2">
@@ -161,33 +157,53 @@ export const CelularlesForm = ({ submit }) => {
                                 required
                             >
                                 <option defaultValue="">Estado...</option>
-                                <option value="Activo">Activo</option>
-                                <option value="Inactivo">Inactivo</option>
+                                <option value="Activa">Activa</option>
+                                <option value="Inactiva">Inactiva</option>
                             </select>
-                            <select
-                                className="form-select"
-                                name='corporativo'
-                                value={corporativo}
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Sector"
+                                name='sector'
+                                value={sector}
                                 onChange={onInputChange}
                                 required
-                            >
-                                <option defaultValue="">Corporativo...</option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
+                            />
                         </div>
 
                         <div className="input-group input-group-sm mb-2">
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Número"
-                                name='numero'
-                                value={numero}
+                                placeholder="Código"
+                                name='codigo'
+                                value={codigo}
                                 onChange={onInputChange}
-                                required
                             />
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="IP"
+                                name='ip'
+                                value={ip}
+                                onChange={onInputChange}
+                            />
+
                         </div>
+
+                        {
+                            (propia === 'Alquilada') &&
+                            <div className="input-group input-group-sm mb-2">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Proveedor"
+                                    name='proveedor'
+                                    value={proveedor}
+                                    onChange={onInputChange}
+                                />
+                            </div>
+                        }
 
                         <div className="input-group input-group-sm mb-2">
                             <textarea
@@ -200,15 +216,9 @@ export const CelularlesForm = ({ submit }) => {
                         </div>
 
                         <div className='text-center'>
-                            {
-                                (ciudad === '')
-                                    ? <button className='btn btn-sm btn-outline-success' type='submit' onClick={handleClose} disabled>
-                                        Guardar
-                                    </button>
-                                    : <button className='btn btn-sm btn-outline-success' type='submit' onClick={handleClose}>
-                                        Guardar
-                                    </button>
-                            }
+                            <button className='btn btn-sm btn-outline-success' type='submit' onClick={handleClose}>
+                                Guardar
+                            </button>
                         </div>
 
                     </form>

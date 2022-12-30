@@ -1,6 +1,4 @@
 import '../styles/RegisterPage.css'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { useState } from 'react'
 import { useAuthStore } from '../hooks/useAuthStore'
 
@@ -85,8 +83,8 @@ export const RegisterPage = () => {
                     >
                         {
                             (showPass) ?
-                                <FontAwesomeIcon icon={faEyeSlash} />
-                                : <FontAwesomeIcon icon={faEye} />
+                                <i className="bi bi-eye-slash-fill"></i>
+                                : <i className="bi bi-eye-fill"></i>
                         }
                     </button>
                 </div>
@@ -113,8 +111,8 @@ export const RegisterPage = () => {
                     >
                         {
                             (showPassConf) ?
-                                <FontAwesomeIcon icon={faEyeSlash} />
-                                : <FontAwesomeIcon icon={faEye} />
+                                <i className="bi bi-eye-slash-fill"></i>
+                                : <i className="bi bi-eye-fill"></i>
                         }
                     </button>
                 </div>

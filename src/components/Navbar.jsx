@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom"
 import { useAuthStore } from "../hooks/useAuthStore"
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import { Ciudades } from "./Ciudades"
 
 export const Navbar = () => {
 
@@ -33,7 +34,15 @@ export const Navbar = () => {
             <form className="container-fluid justify-content-center">
                 <NavLink to="/impresoras" className="btn btn-sm btn-outline-light me-2" type="button">Impresoras</NavLink>
                 <NavLink to="/celulares" className="btn btn-sm btn-outline-light me-2" type="button">Celulares</NavLink>
-                <NavLink to="/config" className="btn btn-sm btn-outline-secondary me-2" type="button"><i className="bi bi-gear"></i></NavLink>
+                <div className="btn-group me-2">
+                    <button className="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i className="bi bi-house"></i>
+                    </button>
+                    <ul className="dropdown-menu dropdown-menu-dark">
+                        <Ciudades />
+                        <li className="dropdown-item">Agregar sucursal</li>
+                    </ul>
+                </div>
                 <button className="btn btn-sm btn-outline-danger" type="button" onClick={logOut}>Salir</button>
             </form>
         </nav>

@@ -2,8 +2,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import '../styles/ImpresorasPage.css'
 import { useEffect, useState } from 'react'
 import { useImpStore } from '../hooks/useImpStore'
-import { ImpresorasForm } from '../components/ImpresorasForm'
-import { ImpresorasList } from '../components/ImpresorasList'
+import { ImpresorasForm } from '../components/Impresoras/ImpresorasForm'
+import { ImpresorasList } from '../components/Impresoras/ImpresorasList'
 import { Badge } from 'react-bootstrap'
 
 export const ImpresorasPage = () => {
@@ -44,7 +44,7 @@ export const ImpresorasPage = () => {
 
     useEffect(() => {
         startGetImp()
-    }, [submit])
+    }, [impresoras])
 
     let activas = 0
     let inactivas = 0
@@ -61,7 +61,7 @@ export const ImpresorasPage = () => {
         <>
             <ImpresorasForm submit={submit} />
 
-            < div className='text-center'>
+            <div className='text-center'>
                 <h3>Impresoras <b className='text-success' title='Impresoras activas'>|{activas}|</b> <b className='text-secondary' title='Impresoras inactivas'>|{inactivas}|</b></h3>
             </div>
 

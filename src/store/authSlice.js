@@ -4,21 +4,17 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState: {
         status: 'not-auth',
-        email: null,
-        usuarios: []
+        email: null
     },
     reducers: {
         onChecking: (state) => {
             state.status = 'checking'
             state.email = null
+            state.usuarios = {}
         },
         onLogin: (state, { payload }) => {
             state.status = 'auth'
             state.email = payload.email
-        },
-        onShow: (state, { payload = [] }) => {
-            state.status = 'ready'
-            state.usuarios = payload
         },
         onLogout: (state) => {
             state.status = 'not-auth'
@@ -27,6 +23,6 @@ export const authSlice = createSlice({
     },
 })
 
-export const { onChecking, onLogin, onLogout, onShow } = authSlice.actions
+export const { onChecking, onLogin, onLogout } = authSlice.actions
 
 export default authSlice
