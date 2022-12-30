@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Badge, Card, Col, ListGroup, Row } from 'react-bootstrap'
 import { useForm } from "../../hooks/useForm"
 
