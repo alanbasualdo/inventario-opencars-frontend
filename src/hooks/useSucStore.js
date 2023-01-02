@@ -45,16 +45,7 @@ export const useSucStore = () => {
 
     const startDeleteSuc = async (id) => {
         try {
-            const { data } = await inventarioApi.delete(`/sucursales/${id}`)
-            if (data.msg === 'ok') {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Sucursal borrada con éxito.',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
+            await inventarioApi.delete(`/sucursales/${id}`)
         } catch (error) {
             console.log(error)
         }

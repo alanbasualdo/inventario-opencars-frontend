@@ -10,7 +10,6 @@ export const useImpStore = () => {
     const startGetImp = async () => {
         try {
             const { data } = await inventarioApi.get('/impresoras')
-            const total = data.total
             const impresoras = data.impresoras
             dispatch(onShow(impresoras))
         }
@@ -50,16 +49,7 @@ export const useImpStore = () => {
 
     const startDeleteImp = async (id) => {
         try {
-            const { data } = await inventarioApi.delete(`/impresoras/${id}`)
-            if (data.msg === 'ok') {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Impresora borrada con éxito.',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
+            await inventarioApi.delete(`/impresoras/${id}`)
         } catch (error) {
             console.log(error)
         }

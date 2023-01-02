@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
 import authSlice from "./authSlice"
+import celMarcasSlice from "./celMarcas"
+import celModelosSlice from "./celModelos"
 import celSlice from "./celSlice"
 import citySlice from "./citySlice"
 import impSlice from "./impSlice"
@@ -11,7 +13,9 @@ export const store = configureStore({
         imp: impSlice.reducer,
         cel: celSlice.reducer,
         suc: sucSlice.reducer,
-        city: citySlice.reducer
+        city: citySlice.reducer,
+        celMarcas: celMarcasSlice.reducer,
+        celModelos: celModelosSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false

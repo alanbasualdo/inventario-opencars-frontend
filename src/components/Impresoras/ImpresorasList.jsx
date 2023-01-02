@@ -47,7 +47,7 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    position: 'top',
+                    position: 'center',
                     icon: 'success',
                     showConfirmButton: false,
                     timer: 1000

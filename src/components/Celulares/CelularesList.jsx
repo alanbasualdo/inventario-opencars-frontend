@@ -46,7 +46,7 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    position: 'top',
+                    position: 'center',
                     icon: 'success',
                     showConfirmButton: false,
                     timer: 1000

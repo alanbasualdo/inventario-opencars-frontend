@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { useCelStore } from "../../hooks/useCelStore"
 import { useForm } from "../../hooks/useForm"
+import { CelularesMarcas } from './CelularesMarcas'
+import { CelularesModelos } from './CelularesModelos'
 
 let formFields = {
     ciudad: '',
@@ -18,7 +20,7 @@ let formFields = {
 
 export const CelularlesForm = ({ submit }) => {
 
-    const { startPostCel } = useCelStore()
+    const { startPostCel, marcas, modelos } = useCelStore()
     const [show, setShow] = useState(false)
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
@@ -42,9 +44,9 @@ export const CelularlesForm = ({ submit }) => {
         <>
             <nav className="navbar mb-2 mt-2">
                 <div className="container-fluid justify-content-center">
-                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar marca' onClick={handleShow}>Marca</button>
+                    <CelularesMarcas />
                     <button className="btn btn-outline-success me-2" type="button" title='Agregar celular' onClick={handleShow}><i className="bi bi-plus-lg"></i></button>
-                    <button className="btn btn-sm btn-outline-primary animate__animated animate__fadeIn" type="button" title='Agregar modelo' onClick={handleShow}>Modelo</button>
+                    <CelularesModelos />
                 </div>
             </nav>
 
@@ -114,24 +116,29 @@ export const CelularlesForm = ({ submit }) => {
                                 required
                             >
                                 <option defaultValue="">Marca...</option>
-                                <option value="Samsung">Samsung</option>
-                                <option value="TCL">TCL</option>
-                                <option value="Apple">Apple</option>
-                                <option value="Nokia">Nokia</option>
-                                <option value="Motorola">Motorola</option>
+                                {
+                                    marcas.map(marca => (
+                                        <option value={marca.nombre}>{marca.nombre}</option>
+                                    ))
+                                }
                             </select>
                         </div>
 
                         <div className="input-group input-group-sm mb-2">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Modelo"
+                            <select
                                 name='modelo'
+                                className="form-select"
                                 value={modelo}
                                 onChange={onInputChange}
                                 required
-                            />
+                            >
+                                <option defaultValue="">Modelo...</option>
+                                {
+                                    modelos.map(modelo => (
+                                        <option value={modelo.nombre}>{modelo.nombre}</option>
+                                    ))
+                                }
+                            </select>
                             <input
                                 type="text"
                                 className="form-control"
@@ -204,11 +211,6 @@ export const CelularlesForm = ({ submit }) => {
 
                     </form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <button className='btn btn-sm btn-outline-danger' onClick={handleClose}>
-                        Cancelar
-                    </button>
-                </Modal.Footer>
             </Modal>
         </>
     )

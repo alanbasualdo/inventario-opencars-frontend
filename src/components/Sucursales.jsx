@@ -35,7 +35,7 @@ export const Sucursales = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    position: 'top',
+                    position: 'center',
                     icon: 'success',
                     showConfirmButton: false,
                     timer: 1000
@@ -124,11 +124,6 @@ export const Sucursales = () => {
                     </ol>
 
                 </Modal.Body>
-                <Modal.Footer>
-                    <button className='btn btn-sm btn-outline-danger' onClick={handleClose}>
-                        Cancelar
-                    </button>
-                </Modal.Footer>
             </Modal>
         </>
     )

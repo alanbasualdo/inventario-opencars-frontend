@@ -45,16 +45,7 @@ export const useCityStore = () => {
 
     const startDeleteCity = async (id) => {
         try {
-            const { data } = await inventarioApi.delete(`/ciudades/${id}`)
-            if (data.msg === 'ok') {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Ciudad borrada con éxito.',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
+            await inventarioApi.delete(`/ciudades/${id}`)
         } catch (error) {
             console.log(error)
         }

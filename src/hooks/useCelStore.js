@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { onShow } from '../store/celSlice'
+import { onShowMarcas } from '../store/celMarcas'
+import { onShowModelos } from '../store/celModelos'
 import inventarioApi from "../api/inventarioApi"
 
 export const useCelStore = () => {
 
     const dispatch = useDispatch()
     const { celulares } = useSelector(state => state.cel)
+    const { marcas } = useSelector(state => state.celMarcas)
+    const { modelos } = useSelector(state => state.celModelos)
 
     const startGetCel = async () => {
         try {
@@ -49,16 +53,7 @@ export const useCelStore = () => {
 
     const startDeleteCel = async (id) => {
         try {
-            const { data } = await inventarioApi.delete(`/celulares/${id}`)
-            if (data.msg === 'ok') {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Celular borrado con éxito.',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
+            await inventarioApi.delete(`/celulares/${id}`)
         } catch (error) {
             console.log(error)
         }
@@ -87,12 +82,92 @@ export const useCelStore = () => {
         }
     }
 
+    /////////////////////////////////////////////////// Marcas ///////////////////////////////////////////////////
+
+    const startGetMarcas = async () => {
+        try {
+            const { data } = await inventarioApi.get('/celulares/marcas')
+            const marcas = data.marcas
+            dispatch(onShowMarcas(marcas))
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    const startPostMarca = async ({ nombre }) => {
+        try {
+            const { data } = await inventarioApi.post('/celulares/marcas', { nombre })
+            if (data.msg === 'existe') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Ya existe la marca ${nombre}`
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const startDeleteMarca = async (id) => {
+        try {
+            await inventarioApi.delete(`/celulares/marcas/${id}`)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    /////////////////////////////////////////////////// Modelos ///////////////////////////////////////////////////
+
+    const startGetModelos = async () => {
+        try {
+            const { data } = await inventarioApi.get('/celulares/modelos')
+            const modelos = data.modelos
+            dispatch(onShowModelos(modelos))
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    const startPostModelo = async ({ nombre }) => {
+        try {
+            const { data } = await inventarioApi.post('/celulares/modelos', { nombre })
+            if (data.msg === 'existe') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Ya existe el modelo ${nombre}`
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const startDeleteModelo = async (id) => {
+        try {
+            await inventarioApi.delete(`/celulares/modelos/${id}`)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return {
         celulares,
+        marcas,
+        modelos,
 
         startGetCel,
         startPostCel,
         startDeleteCel,
-        startPutCel
+        startPutCel,
+        startGetMarcas,
+        startPostMarca,
+        startDeleteMarca,
+        startGetModelos,
+        startPostModelo,
+        startDeleteModelo
     }
 }

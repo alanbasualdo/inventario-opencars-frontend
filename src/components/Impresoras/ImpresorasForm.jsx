@@ -44,11 +44,11 @@ export const ImpresorasForm = ({ submit }) => {
         <>
             <nav className="navbar mb-2 mt-2">
                 <div className="container-fluid justify-content-center">
-                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar marca' onClick={handleShow}>Marca</button>
-                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar modelo' onClick={handleShow}>Modelo</button>
+                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar marca' onClick={handleShow}>Marcas</button>
+                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar modelo' onClick={handleShow}>Modelos</button>
                     <button className="btn btn-outline-success me-2" type="button" title='Agregar impresora' onClick={handleShow}><i className="bi bi-plus-lg"></i></button>
-                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar tóner' onClick={handleShow}>Tóner</button>
-                    <button className="btn btn-sm btn-outline-primary animate__animated animate__fadeIn" type="button" title='Agregar proveedor' onClick={handleShow}>Proveedor</button>
+                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar tóner' onClick={handleShow}>Tóners</button>
+                    <button className="btn btn-sm btn-outline-primary animate__animated animate__fadeIn" type="button" title='Agregar proveedor' onClick={handleShow}>Proveedores</button>
                 </div>
             </nav>
 
@@ -223,11 +223,6 @@ export const ImpresorasForm = ({ submit }) => {
 
                     </form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <button className='btn btn-sm btn-outline-danger' onClick={handleClose}>
-                        Cancelar
-                    </button>
-                </Modal.Footer>
             </Modal>
         </>
     )
