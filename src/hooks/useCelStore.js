@@ -35,7 +35,6 @@ export const useCelStore = () => {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Celular guardado con éxito.',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -86,7 +85,7 @@ export const useCelStore = () => {
 
     const startGetMarcas = async () => {
         try {
-            const { data } = await inventarioApi.get('/celulares/marcas')
+            const { data } = await inventarioApi.get('/celulares/marcasCelulares')
             const marcas = data.marcas
             dispatch(onShowMarcas(marcas))
         }
@@ -97,8 +96,15 @@ export const useCelStore = () => {
 
     const startPostMarca = async ({ nombre }) => {
         try {
-            const { data } = await inventarioApi.post('/celulares/marcas', { nombre })
-            if (data.msg === 'existe') {
+            const { data } = await inventarioApi.post('/celulares/marcasCelulares', { nombre })
+            if (data.msg === 'ok') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -112,7 +118,7 @@ export const useCelStore = () => {
 
     const startDeleteMarca = async (id) => {
         try {
-            await inventarioApi.delete(`/celulares/marcas/${id}`)
+            await inventarioApi.delete(`/celulares/marcasCelulares/${id}`)
         } catch (error) {
             console.log(error)
         }
@@ -122,7 +128,7 @@ export const useCelStore = () => {
 
     const startGetModelos = async () => {
         try {
-            const { data } = await inventarioApi.get('/celulares/modelos')
+            const { data } = await inventarioApi.get('/celulares/modelosCelulares')
             const modelos = data.modelos
             dispatch(onShowModelos(modelos))
         }
@@ -133,8 +139,15 @@ export const useCelStore = () => {
 
     const startPostModelo = async ({ nombre }) => {
         try {
-            const { data } = await inventarioApi.post('/celulares/modelos', { nombre })
-            if (data.msg === 'existe') {
+            const { data } = await inventarioApi.post('/celulares/modelosCelulares', { nombre })
+            if (data.msg === 'ok') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -148,7 +161,7 @@ export const useCelStore = () => {
 
     const startDeleteModelo = async (id) => {
         try {
-            await inventarioApi.delete(`/celulares/modelos/${id}`)
+            await inventarioApi.delete(`/celulares/modelosCelulares/${id}`)
         } catch (error) {
             console.log(error)
         }

@@ -47,7 +47,7 @@ export const CelularesMarcas = () => {
 
   useEffect(() => {
     startGetMarcas()
-  }, [marcas])
+  }, [])
 
   return (
     <>
@@ -83,6 +83,7 @@ export const CelularesMarcas = () => {
                       value={nombre}
                       onChange={(e) => setNombre(e.target.value)}
                       name="nombre"
+                      required
                     />
                     <button className="btn btn-outline-success" type="submit">Agregar</button>
                   </>
@@ -121,7 +122,6 @@ export const CelularesMarcas = () => {
               ))
             }
           </ol>
-
         </Modal.Body>
       </Modal>
     </>

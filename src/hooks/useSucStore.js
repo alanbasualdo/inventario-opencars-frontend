@@ -22,14 +22,12 @@ export const useSucStore = () => {
 
         try {
             const { data } = await inventarioApi.post('/sucursales', { nombre })
-
             if (data.msg === 'ok') {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Sucursal guardada con éxito.',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1000
                 })
             } else if (data.msg === 'existe') {
                 Swal.fire({

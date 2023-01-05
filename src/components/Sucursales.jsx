@@ -47,11 +47,11 @@ export const Sucursales = () => {
 
     useEffect(() => {
         startGetSuc()
-    }, [sucursales])
+    }, [])
 
     return (
         <>
-            <li className="dropdown-item" onClick={handleShow}>Sucursales</li>
+            <button className="dropdown-item" onClick={handleShow}>Sucursales</button>
 
             <Modal show={show} onHide={handleClose}
                 size="lg"

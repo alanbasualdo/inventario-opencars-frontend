@@ -27,9 +27,8 @@ export const useCityStore = () => {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Ciudad guardada con éxito.',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1000
                 })
             } else if (data.msg === 'existe') {
                 Swal.fire({

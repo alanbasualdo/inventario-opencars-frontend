@@ -146,7 +146,6 @@ export const CelularlesForm = ({ submit }) => {
                                 name='usuario'
                                 value={usuario}
                                 onChange={onInputChange}
-                                required
                             />
                         </div>
 
@@ -183,7 +182,6 @@ export const CelularlesForm = ({ submit }) => {
                                 name='numero'
                                 value={numero}
                                 onChange={onInputChange}
-                                required
                             />
                         </div>
 

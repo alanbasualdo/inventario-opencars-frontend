@@ -2,6 +2,10 @@ import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { useForm } from '../../hooks/useForm'
 import { useImpStore } from '../../hooks/useImpStore'
+import { ImpresorasMarcas } from './ImpresorasMarcas'
+import { ImpresorasModelos } from './ImpresorasModelos'
+import { ImpresorasProveedores } from './ImpresorasProveedores'
+import { ImpresorasToners } from './ImpresorasToners'
 
 let formFields = {
     ciudad: '',
@@ -44,11 +48,11 @@ export const ImpresorasForm = ({ submit }) => {
         <>
             <nav className="navbar mb-2 mt-2">
                 <div className="container-fluid justify-content-center">
-                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar marca' onClick={handleShow}>Marcas</button>
-                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar modelo' onClick={handleShow}>Modelos</button>
+                    <ImpresorasMarcas />
+                    <ImpresorasModelos />
                     <button className="btn btn-outline-success me-2" type="button" title='Agregar impresora' onClick={handleShow}><i className="bi bi-plus-lg"></i></button>
-                    <button className="btn btn-sm btn-outline-primary me-2 animate__animated animate__fadeIn" type="button" title='Agregar tóner' onClick={handleShow}>Tóners</button>
-                    <button className="btn btn-sm btn-outline-primary animate__animated animate__fadeIn" type="button" title='Agregar proveedor' onClick={handleShow}>Proveedores</button>
+                    <ImpresorasToners />
+                    <ImpresorasProveedores />
                 </div>
             </nav>
 

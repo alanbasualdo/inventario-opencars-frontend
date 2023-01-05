@@ -47,11 +47,11 @@ export const Ciudades = () => {
 
   useEffect(() => {
     startGetCity()
-  }, [ciudades])
+  }, [])
 
   return (
     <>
-      <li className="dropdown-item" onClick={handleShow}>Ciudades</li>
+      <button className="dropdown-item" onClick={handleShow}>Ciudades</button>
 
       <Modal show={show} onHide={handleClose}
         size="lg"
@@ -83,6 +83,7 @@ export const Ciudades = () => {
                       value={nombre}
                       onChange={(e) => setNombre(e.target.value)}
                       name="nombre"
+                      required
                     />
                     <button className="btn btn-outline-success" type="submit">Agregar</button>
                   </>

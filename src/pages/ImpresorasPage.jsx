@@ -44,7 +44,7 @@ export const ImpresorasPage = () => {
 
     useEffect(() => {
         startGetImp()
-    }, [impresoras])
+    }, [])
 
     let activas = 0
     let inactivas = 0

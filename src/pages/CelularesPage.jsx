@@ -7,7 +7,7 @@ import { useCelStore } from '../hooks/useCelStore'
 
 export const CelularesPage = () => {
 
-    const { celulares, startGetCel, startDeleteCel, startPutCel } = useCelStore()
+    const { celulares, marcas, modelos, startGetCel, startDeleteCel, startPutCel } = useCelStore()
     const [parametro, setParametro] = useState("")
     const [busqueda, setBusqueda] = useState("")
 
@@ -37,7 +37,7 @@ export const CelularesPage = () => {
 
     useEffect(() => {
         startGetCel()
-    }, [celulares])
+    }, [])
 
     let activos = 0
     let inactivos = 0
@@ -91,6 +91,8 @@ export const CelularesPage = () => {
                 startDeleteCel={startDeleteCel}
                 startPutCel={startPutCel}
                 submit={submit}
+                marcas={marcas}
+                modelos={modelos}
             />
 
         </>
