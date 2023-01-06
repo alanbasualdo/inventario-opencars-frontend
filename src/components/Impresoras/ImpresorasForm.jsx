@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
+import { useCityStore } from '../../hooks/useCityStore'
 import { useForm } from '../../hooks/useForm'
 import { useImpStore } from '../../hooks/useImpStore'
+import { useSucStore } from '../../hooks/useSucStore'
 import { ImpresorasMarcas } from './ImpresorasMarcas'
 import { ImpresorasModelos } from './ImpresorasModelos'
 import { ImpresorasProveedores } from './ImpresorasProveedores'
@@ -24,7 +26,10 @@ let formFields = {
 
 export const ImpresorasForm = ({ submit }) => {
 
-    const { startPostImp } = useImpStore()
+    const { startPostImp, marcas, modelos, toners, proveedores } = useImpStore()
+    const { sucursales } = useSucStore()
+    const { ciudades } = useCityStore()
+
     const [show, setShow] = useState(false)
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
@@ -75,14 +80,11 @@ export const ImpresorasForm = ({ submit }) => {
                                 required
                             >
                                 <option defaultValue="">Ciudad...</option>
-                                <option value="Junín">Junín</option>
-                                <option value="Pergamino">Pergamino</option>
-                                <option value="San Nicolás">San Nicolás</option>
-                                <option value="Chivilcoy">Chivilcoy</option>
-                                <option value="Bragado">Bragado</option>
-                                <option value="9 de Julio">9 de Julio</option>
-                                <option value="Santa Rosa">Santa Rosa</option>
-                                <option value="General Pico">General Pico</option>
+                                {
+                                    ciudades.map(ciudad => (
+                                        <option value={ciudad.nombre}>{ciudad.nombre}</option>
+                                    ))
+                                }
                             </select>
 
                             <select
@@ -93,11 +95,11 @@ export const ImpresorasForm = ({ submit }) => {
                                 required
                             >
                                 <option defaultValue="">Sucursal...</option>
-                                <option value="Fortecar">Fortecar</option>
-                                <option value="Granville">Granville</option>
-                                <option value="Opencars">Opencars</option>
-                                <option value="Pampa Wagen">Pampa Wagen</option>
-                                <option value="Granville Citroen">Granville Citroen</option>
+                                {
+                                    sucursales.map(sucursal => (
+                                        <option value={sucursal.nombre}>{sucursal.nombre}</option>
+                                    ))
+                                }
                             </select>
                         </div>
 
@@ -110,23 +112,27 @@ export const ImpresorasForm = ({ submit }) => {
                                 required
                             >
                                 <option defaultValue="">Marca...</option>
-                                <option value="Samsung">Samsung</option>
-                                <option value="Lexmark">Lexmark</option>
-                                <option value="HP">HP</option>
-                                <option value="Ricoh">Ricoh</option>
-                                <option value="Brother">Brother</option>
-                                <option value="Canon">Canon</option>
+                                {
+                                    marcas.map(marca => (
+                                        <option value={marca.nombre}>{marca.nombre}</option>
+                                    ))
+                                }
                             </select>
 
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Modelo"
+                            <select
                                 name='modelo'
+                                className="form-select"
                                 value={modelo}
                                 onChange={onInputChange}
                                 required
-                            />
+                            >
+                                <option defaultValue="">Modelo...</option>
+                                {
+                                    modelos.map(modelo => (
+                                        <option value={modelo.nombre}>{modelo.nombre}</option>
+                                    ))
+                                }
+                            </select>
                         </div>
 
                         <div className="input-group input-group-sm mb-2">
@@ -137,7 +143,11 @@ export const ImpresorasForm = ({ submit }) => {
                                 onChange={onInputChange}
                             >
                                 <option defaultValue="">Tóner...</option>
-                                <option value="MGN-CF-217A">MGN-CF-217A</option>
+                                {
+                                    toners.map(toner => (
+                                        <option value={toner.nombre}>{toner.nombre}</option>
+                                    ))
+                                }
                             </select>
                             <select
                                 className="form-select"
@@ -192,20 +202,24 @@ export const ImpresorasForm = ({ submit }) => {
                                 value={ip}
                                 onChange={onInputChange}
                             />
-
                         </div>
 
                         {
                             (propia === 'Alquilada') &&
                             <div className="input-group input-group-sm mb-2">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Proveedor"
+                                <select
+                                    className="form-select"
                                     name='proveedor'
                                     value={proveedor}
                                     onChange={onInputChange}
-                                />
+                                >
+                                    <option defaultValue="">Proveedor...</option>
+                                    {
+                                        proveedores.map(proveedor => (
+                                            <option value={proveedor.nombre}>{proveedor.nombre}</option>
+                                        ))
+                                    }
+                                </select>
                             </div>
                         }
 

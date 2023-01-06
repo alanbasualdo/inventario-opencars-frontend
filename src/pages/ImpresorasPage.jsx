@@ -8,7 +8,7 @@ import { Badge } from 'react-bootstrap'
 
 export const ImpresorasPage = () => {
 
-    const { impresoras, startGetImp, startDeleteImp, startPutImp } = useImpStore()
+    const { impresoras, marcas, modelos, toners, proveedores, startGetImp, startDeleteImp, startPutImp } = useImpStore()
     const [parametro, setParametro] = useState("")
     const [busqueda, setBusqueda] = useState("")
 
@@ -101,6 +101,10 @@ export const ImpresorasPage = () => {
                 startDeleteImp={startDeleteImp}
                 startPutImp={startPutImp}
                 submit={submit}
+                marcas={marcas}
+                modelos={modelos}
+                toners={toners}
+                proveedores={proveedores}
             />
         </>
     )

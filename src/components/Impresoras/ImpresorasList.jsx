@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Badge, Card, Col, ListGroup, Row } from 'react-bootstrap'
+import { useCityStore } from '../../hooks/useCityStore'
 import { useForm } from '../../hooks/useForm'
+import { useSucStore } from '../../hooks/useSucStore'
 
 let formFields = {
     uid: '',
@@ -18,7 +20,10 @@ let formFields = {
     comentarios: ''
 }
 
-export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit }) => {
+export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit, marcas, modelos, toners, proveedores }) => {
+
+    const { ciudades } = useCityStore()
+    const { sucursales } = useSucStore()
 
     const [edit, setEdit] = useState("")
     const [editId, setEditId] = useState("")
@@ -97,69 +102,98 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                     (editId === impresora.uid && edit)
                                         ? <>
                                             <form onSubmit={submit}>
-                                                <ListGroup.Item variant="light">Ciudad: {edit
-                                                    ? <div className='input-group input-group-sm'>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder={impresora.ciudad}
-                                                            value={ciudad}
-                                                            onChange={onInputChange}
+                                                <ListGroup.Item variant="light">Ciudad:
+                                                    <div className='input-group input-group-sm'>
+                                                        <select
                                                             name='ciudad'
-                                                        />
-                                                    </div>
-                                                    : <b>{impresora.ciudad}</b>}
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Sucursal: {edit
-                                                    ? <div className='input-group input-group-sm'>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder={impresora.sucursal}
-                                                            value={sucursal}
                                                             onChange={onInputChange}
+                                                            className="form-select"
+                                                            required
+                                                        >
+                                                            <option defaultValue={impresora.ciudad}>{impresora.ciudad}</option>
+                                                            {
+                                                                ciudades.map(ciudad => (
+                                                                    (ciudad.nombre !== impresora.ciudad) &&
+                                                                    <option value={ciudad.nombre}>{ciudad.nombre}</option>
+                                                                ))
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Sucursal:
+                                                    <div className='input-group input-group-sm'>
+                                                        <select
                                                             name='sucursal'
-                                                        />
+                                                            onChange={onInputChange}
+                                                            className="form-select"
+                                                            required
+                                                        >
+                                                            <option defaultValue={impresora.sucursal}>{impresora.sucursal}</option>
+                                                            {
+                                                                sucursales.map(sucursal => (
+                                                                    (sucursal.nombre !== impresora.sucursal) &&
+                                                                    <option value={sucursal.nombre}>{sucursal.nombre}</option>
+                                                                ))
+                                                            }
+                                                        </select>
                                                     </div>
-                                                    : <b>{impresora.sucursal}</b>}
                                                 </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Marca: {edit
-                                                    ? <div className='input-group input-group-sm'>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder={impresora.marca}
-                                                            value={marca}
-                                                            onChange={onInputChange}
+                                                <ListGroup.Item variant="light">Marca:
+                                                    <div className='input-group input-group-sm'>
+                                                        <select
                                                             name='marca'
-                                                        />
-                                                    </div>
-                                                    : <b>{impresora.marca}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Modelo: {edit
-                                                    ? <div className='input-group input-group-sm'>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder={impresora.modelo}
-                                                            value={modelo}
+                                                            className="form-select"
                                                             onChange={onInputChange}
+                                                            required
+                                                        >
+                                                            <option defaultValue={impresora.marca}>{impresora.marca}</option>
+                                                            {
+                                                                marcas.map(marca => (
+                                                                    (marca.nombre !== impresora.marca) &&
+                                                                    <option value={marca.nombre}>{marca.nombre}</option>
+                                                                ))
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Modelo:
+                                                    <div className='input-group input-group-sm'>
+                                                        <select
                                                             name='modelo'
-                                                        />
-                                                    </div>
-                                                    : <b>{impresora.modelo}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Tóner: {edit
-                                                    ? <div className='input-group input-group-sm'>
-                                                        <input type="text"
-                                                            className="form-control"
-                                                            placeholder={impresora.toner}
-                                                            value={toner}
+                                                            className="form-select"
                                                             onChange={onInputChange}
-                                                            name='toner'
-                                                        />
+                                                            required
+                                                        >
+                                                            <option defaultValue={impresora.modelo}>{impresora.modelo}</option>
+                                                            {
+                                                                modelos.map(modelo => (
+                                                                    (modelo.nombre !== impresora.modelo) &&
+                                                                    <option value={modelo.nombre}>{modelo.nombre}</option>
+                                                                ))
+                                                            }
+                                                        </select>
                                                     </div>
-                                                    : <b>{impresora.toner}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Propiedad: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Tóner:
+                                                    <div className='input-group input-group-sm'>
+                                                        <select
+                                                            name='toner'
+                                                            className="form-select"
+                                                            onChange={onInputChange}
+                                                            required
+                                                        >
+                                                            <option defaultValue={impresora.toner}>{impresora.toner}</option>
+                                                            {
+                                                                toners.map(toner => (
+                                                                    (toner.nombre !== impresora.toner) &&
+                                                                    <option value={toner.nombre}>{toner.nombre}</option>
+                                                                ))
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Propiedad:
+                                                    <div className='input-group input-group-sm'>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -169,9 +203,9 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                             name='propia'
                                                         />
                                                     </div>
-                                                    : <b>{impresora.propia}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Estado: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Estado:
+                                                    <div className='input-group input-group-sm'>
                                                         <select
                                                             className="form-select"
                                                             onChange={onInputChange}
@@ -183,9 +217,9 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                             <option value="Inactivo">Inactiva</option>
                                                         </select>
                                                     </div>
-                                                    : <b>{celular.usuario}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Sector: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Sector:
+                                                    <div className='input-group input-group-sm'>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -195,9 +229,9 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                             name='sector'
                                                         />
                                                     </div>
-                                                    : <b>{impresora.sector}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">IP: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">IP:
+                                                    <div className='input-group input-group-sm'>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -207,9 +241,9 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                             name='ip'
                                                         />
                                                     </div>
-                                                    : <b>{impresora.ip}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Código: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Código:
+                                                    <div className='input-group input-group-sm'>
                                                         <input
                                                             type="number"
                                                             className="form-control"
@@ -219,21 +253,27 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                             name='codigo'
                                                         />
                                                     </div>
-                                                    : <b>{impresora.codigo}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Proveedor: {edit
-                                                    ? <div className='input-group input-group-sm'>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder={impresora.proveedor}
-                                                            value={proveedor}
-                                                            onChange={onInputChange}
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Proveedor:
+                                                    <div className='input-group input-group-sm'>
+                                                        <select
                                                             name='proveedor'
-                                                        />
+                                                            className="form-select"
+                                                            onChange={onInputChange}
+                                                            required
+                                                        >
+                                                            <option defaultValue={impresora.proveedor}>{impresora.proveedor}</option>
+                                                            {
+                                                                proveedores.map(proveedor => (
+                                                                    (proveedor.nombre !== impresora.proveedor) &&
+                                                                    <option value={proveedor.nombre}>{proveedor.nombre}</option>
+                                                                ))
+                                                            }
+                                                        </select>
                                                     </div>
-                                                    : <b>{impresora.proveedor}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Comentarios: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Comentarios:
+                                                    <div className='input-group input-group-sm'>
                                                         <textarea
                                                             type="text"
                                                             className="form-control"
@@ -243,7 +283,7 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                             name='comentarios'
                                                         />
                                                     </div>
-                                                    : <b>{impresora.comentarios}</b>}</ListGroup.Item>
+                                                </ListGroup.Item>
                                                 <div className='mt-2'>
                                                     <Badge type='button' bg="dark p-2 me-2" pill onClick={() => closeEdit()} title='Cancelar'><i className="bi bi-x"></i></Badge>
                                                     <button type='submit' className='btn btn-sm btn-success'><i className="bi bi-check-lg"></i></button>
@@ -260,7 +300,9 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                             <ListGroup.Item variant="light">Sector: <b>{impresora.sector}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">IP: <b>{impresora.ip}</b></ListGroup.Item>
                                             <ListGroup.Item variant="light">Código: <b>{impresora.codigo}</b></ListGroup.Item>
-                                            <ListGroup.Item variant="light">Proveedor: <b>{impresora.proveedor}</b></ListGroup.Item>
+                                            {
+                                                (impresora.proveedor !== '') && <ListGroup.Item variant="light">Proveedor: <b>{impresora.proveedor}</b></ListGroup.Item>
+                                            }
                                             {
                                                 (impresora.comentarios !== '') && <ListGroup.Item variant="light">Comentarios: <b>{impresora.comentarios}</b></ListGroup.Item>
                                             }

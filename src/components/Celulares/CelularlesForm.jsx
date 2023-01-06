@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { useCelStore } from "../../hooks/useCelStore"
+import { useCityStore } from '../../hooks/useCityStore'
 import { useForm } from "../../hooks/useForm"
+import { useSucStore } from '../../hooks/useSucStore'
 import { CelularesMarcas } from './CelularesMarcas'
 import { CelularesModelos } from './CelularesModelos'
 
@@ -21,6 +23,9 @@ let formFields = {
 export const CelularlesForm = ({ submit }) => {
 
     const { startPostCel, marcas, modelos } = useCelStore()
+    const { sucursales } = useSucStore()
+    const { ciudades } = useCityStore()
+
     const [show, setShow] = useState(false)
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
@@ -69,14 +74,11 @@ export const CelularlesForm = ({ submit }) => {
                                 required
                             >
                                 <option defaultValue="">Ciudad...</option>
-                                <option value="Junín">Junín</option>
-                                <option value="Pergamino">Pergamino</option>
-                                <option value="San Nicolás">San Nicolás</option>
-                                <option value="Chivilcoy">Chivilcoy</option>
-                                <option value="Bragado">Bragado</option>
-                                <option value="9 de Julio">9 de Julio</option>
-                                <option value="Santa Rosa">Santa Rosa</option>
-                                <option value="General Pico">General Pico</option>
+                                {
+                                    ciudades.map(ciudad => (
+                                        <option value={ciudad.nombre}>{ciudad.nombre}</option>
+                                    ))
+                                }
                             </select>
 
                             <select
@@ -87,11 +89,11 @@ export const CelularlesForm = ({ submit }) => {
                                 required
                             >
                                 <option defaultValue="">Sucursal...</option>
-                                <option value="Fortecar">Fortecar</option>
-                                <option value="Granville">Granville</option>
-                                <option value="Opencars">Opencars</option>
-                                <option value="Pampa Wagen">Pampa Wagen</option>
-                                <option value="Granville Citroen">Granville Citroen</option>
+                                {
+                                    sucursales.map(sucursal => (
+                                        <option value={sucursal.nombre}>{sucursal.nombre}</option>
+                                    ))
+                                }
                             </select>
                         </div>
 
