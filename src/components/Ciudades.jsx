@@ -106,7 +106,7 @@ export const Ciudades = () => {
           <ol className="list-group list-group m-4">
             {
               ciudades.map(ciudad => (
-                <li className="list-group-item d-flex justify-content-between align-items-start" key={ciudad.uid}>
+                <li key={ciudad.uid} className="list-group-item d-flex justify-content-between align-items-start">
                   <div className="ms-2 me-auto">
                     {ciudad.nombre}
                   </div>

@@ -106,7 +106,7 @@ export const CelularesMarcas = () => {
           <ol className="list-group list-group m-4">
             {
               marcas.map(marca => (
-                <li className="list-group-item d-flex justify-content-between align-items-start" key={marca.uid}>
+                <li key={marca.uid} className="list-group-item d-flex justify-content-between align-items-start">
                   <div className="ms-2 me-auto">
                     {marca.nombre}
                   </div>

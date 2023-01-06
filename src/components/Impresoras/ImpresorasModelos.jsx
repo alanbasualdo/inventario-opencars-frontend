@@ -106,7 +106,7 @@ export const ImpresorasModelos = () => {
           <ol className="list-group list-group m-4">
             {
               modelos.map(modelo => (
-                <li className="list-group-item d-flex justify-content-between align-items-start" key={modelo.uid}>
+                <li key={modelo.uid} className="list-group-item d-flex justify-content-between align-items-start">
                   <div className="ms-2 me-auto">
                     {modelo.nombre}
                   </div>

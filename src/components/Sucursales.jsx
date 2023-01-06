@@ -106,7 +106,7 @@ export const Sucursales = () => {
                     <ol className="list-group list-group m-4">
                         {
                             sucursales.map(sucursal => (
-                                <li className="list-group-item d-flex justify-content-between align-items-start" key={sucursal.uid}>
+                                <li key={sucursal.uid} className="list-group-item d-flex justify-content-between align-items-start">
                                     <div className="ms-2 me-auto">
                                         {sucursal.nombre}
                                     </div>

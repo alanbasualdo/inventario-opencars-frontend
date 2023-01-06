@@ -106,7 +106,7 @@ export const ImpresorasToners = () => {
           <ol className="list-group list-group m-4">
             {
               toners.map(toner => (
-                <li className="list-group-item d-flex justify-content-between align-items-start" key={toner.uid}>
+                <li key={toner.uid} className="list-group-item d-flex justify-content-between align-items-start">
                   <div className="ms-2 me-auto">
                     {toner.nombre}
                   </div>

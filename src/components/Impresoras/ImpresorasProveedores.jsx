@@ -106,7 +106,7 @@ export const ImpresorasProveedores = () => {
                     <ol className="list-group list-group m-4">
                         {
                             proveedores.map(proveedor => (
-                                <li className="list-group-item d-flex justify-content-between align-items-start" key={proveedor.uid}>
+                                <li key={proveedor.uid} className="list-group-item d-flex justify-content-between align-items-start">
                                     <div className="ms-2 me-auto">
                                         {proveedor.nombre}
                                     </div>

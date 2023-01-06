@@ -111,8 +111,8 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                     (editId === celular.uid && edit)
                                         ? <>
                                             <form onSubmit={submit}>
-                                                <ListGroup.Item variant="light">Ciudad: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                <ListGroup.Item variant="light">Ciudad:
+                                                    <div className='input-group input-group-sm'>
                                                         <select
                                                             name='ciudad'
                                                             onChange={onInputChange}
@@ -128,10 +128,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             }
                                                         </select>
                                                     </div>
-                                                    : <b>{celular.ciudad}</b>}
                                                 </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Sucursal: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                <ListGroup.Item variant="light">Sucursal:
+                                                    <div className='input-group input-group-sm'>
                                                         <select
                                                             name='sucursal'
                                                             onChange={onInputChange}
@@ -147,10 +146,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             }
                                                         </select>
                                                     </div>
-                                                    : <b>{celular.sucursal}</b>}
                                                 </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Facturación: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                <ListGroup.Item variant="light">Facturación:
+                                                    <div className='input-group input-group-sm'>
                                                         <select
                                                             className="form-select"
                                                             name='facturacion'
@@ -178,9 +176,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             }
                                                         </select>
                                                     </div>
-                                                    : <b>{celular.marca}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Marca: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Marca:
+                                                    <div className='input-group input-group-sm'>
                                                         <select
                                                             name='marca'
                                                             className="form-select"
@@ -196,9 +194,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             }
                                                         </select>
                                                     </div>
-                                                    : <b>{celular.marca}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Modelo: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Modelo:
+                                                    <div className='input-group input-group-sm'>
                                                         <select
                                                             name='modelo'
                                                             className="form-select"
@@ -214,9 +212,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             }
                                                         </select>
                                                     </div>
-                                                    : <b>{celular.modelo}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Usuario: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Usuario:
+                                                    <div className='input-group input-group-sm'>
                                                         <input type="text"
                                                             className="form-control"
                                                             placeholder={celular.usuario}
@@ -225,9 +223,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             name='usuario'
                                                         />
                                                     </div>
-                                                    : <b>{celular.usuario}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Estado: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Estado:
+                                                    <div className='input-group input-group-sm'>
                                                         <select
                                                             className="form-select"
                                                             onChange={onInputChange}
@@ -242,9 +240,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             }
                                                         </select>
                                                     </div>
-                                                    : <b>{celular.usuario}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Corporativo: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Corporativo:
+                                                    <div className='input-group input-group-sm'>
                                                         <select
                                                             className="form-select"
                                                             name='corporativo'
@@ -259,9 +257,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             }
                                                         </select>
                                                     </div>
-                                                    : <b>{celular.corporativo}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Número: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Número:
+                                                    <div className='input-group input-group-sm'>
                                                         <input
                                                             type="number"
                                                             className="form-control"
@@ -271,9 +269,9 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             name='numero'
                                                         />
                                                     </div>
-                                                    : <b>{celular.numero}</b>}</ListGroup.Item>
-                                                <ListGroup.Item variant="light">Comentarios: {edit
-                                                    ? <div className='input-group input-group-sm'>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item variant="light">Comentarios:
+                                                    <div className='input-group input-group-sm'>
                                                         <textarea
                                                             type="text"
                                                             className="form-control"
@@ -283,7 +281,7 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             name='comentarios'
                                                         />
                                                     </div>
-                                                    : <b>{celular.comentarios}</b>}</ListGroup.Item>
+                                                </ListGroup.Item>
                                                 <div className='mt-2'>
                                                     <Badge type='button' bg="dark p-2 me-2" pill onClick={() => closeEdit()} title='Cancelar'><i className="bi bi-x"></i></Badge>
                                                     <button type='submit' className='btn btn-sm btn-success'><i className="bi bi-check-lg"></i></button>
