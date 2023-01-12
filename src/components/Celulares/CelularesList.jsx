@@ -1,34 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Badge, Card, Col, ListGroup, Row } from 'react-bootstrap'
-import { useCityStore } from "../../hooks/useCityStore"
 import { useForm } from "../../hooks/useForm"
-import { useSucStore } from "../../hooks/useSucStore"
 
 let formFields = {
     uid: '',
-    ciudad: '',
-    sucursal: '',
-    facturacion: '',
-    marca: '',
-    modelo: '',
     usuario: '',
     estado: '',
-    corporativo: '',
-    numero: '',
     comentarios: ''
 }
 
-export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, marcas, modelos }) => {
-
-    const { ciudades } = useCityStore()
-    const { sucursales } = useSucStore()
+export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) => {
 
     const [edit, setEdit] = useState("")
     const [editId, setEditId] = useState("")
 
-    let { uid, ciudad, sucursal, facturacion, marca, modelo,
-        usuario, estado, corporativo,
-        numero, comentarios, onInputChange } = useForm(formFields)
+    let { uid, usuario, estado, comentarios, onInputChange } = useForm(formFields)
 
     const editBtn = (id) => {
         setEdit(true)
@@ -63,9 +49,7 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
 
     submit = (e) => {
         e.preventDefault()
-        if (ciudad === '' || sucursal === '' || facturacion === '' || marca === '' ||
-            modelo === '' || usuario === '' || estado === '' || corporativo === '' ||
-            numero === '') {
+        if (usuario === '' || estado === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Todos los campos deben completarse',
@@ -74,10 +58,8 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
             return
         }
         startPutCel({
-            uid, ciudad, sucursal, facturacion, marca, modelo,
-            usuario, estado, corporativo, numero, comentarios
+            uid, usuario, estado, comentarios
         })
-
         setEdit(false)
     }
 
@@ -85,8 +67,7 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
         <Row xs={1} sm={2} md={3} lg={4} className="g-4 text-center m-2 animate__animated animate__fadeIn">
             {Array.from(results).map(celular => (
                 <Col key={celular.uid}>
-                    {uid = celular.uid}
-                    <Card>
+                    <Card key={uid = celular.uid}>
                         <Card.Body>
                             <ListGroup variant="flush">
                                 <div>
@@ -106,110 +87,21 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                             </>
                                     }
                                 </div>
-
                                 {
                                     (editId === celular.uid && edit)
                                         ? <>
                                             <form onSubmit={submit}>
-                                                <ListGroup.Item variant="light">Ciudad:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='ciudad'
-                                                            onChange={onInputChange}
-                                                            className="form-select"
-                                                            required
-                                                        >
-                                                            <option defaultValue={celular.ciudad}>{celular.ciudad}</option>
-                                                            {
-                                                                ciudades.map(ciudad => (
-                                                                    (ciudad.nombre !== celular.ciudad) &&
-                                                                    <option value={ciudad.nombre}>{ciudad.nombre}</option>
-                                                                ))
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Sucursal:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='sucursal'
-                                                            onChange={onInputChange}
-                                                            className="form-select"
-                                                            required
-                                                        >
-                                                            <option defaultValue={celular.sucursal}>{celular.sucursal}</option>
-                                                            {
-                                                                sucursales.map(sucursal => (
-                                                                    (sucursal.nombre !== celular.sucursal) &&
-                                                                    <option value={sucursal.nombre}>{sucursal.nombre}</option>
-                                                                ))
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Facturación:
+                                                <ListGroup.Item variant="light">Estado:
                                                     <div className='input-group input-group-sm'>
                                                         <select
                                                             className="form-select"
-                                                            name='facturacion'
                                                             onChange={onInputChange}
+                                                            name='estado'
                                                             required
                                                         >
-                                                            <option defaultValue={celular.facturacion}>{celular.facturacion}</option>
-                                                            {
-                                                                (celular.facturacion == 'Personal') && <>
-                                                                    <option value="Movistar">Movistar</option>
-                                                                    <option value="Claro">Claro</option>
-                                                                </>
-                                                            }
-                                                            {
-                                                                (celular.facturacion == 'Movistar') && <>
-                                                                    <option value="Personal">Personal</option>
-                                                                    <option value="Claro">Claro</option>
-                                                                </>
-                                                            }
-                                                            {
-                                                                (celular.facturacion == 'Claro') && <>
-                                                                    <option value="Personal">Personal</option>
-                                                                    <option value="Movistar">Movistar</option>
-                                                                </>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Marca:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='marca'
-                                                            className="form-select"
-                                                            onChange={onInputChange}
-                                                            required
-                                                        >
-                                                            <option defaultValue={celular.marca}>{celular.marca}</option>
-                                                            {
-                                                                marcas.map(marca => (
-                                                                    (marca.nombre !== celular.marca) &&
-                                                                    <option value={marca.nombre}>{marca.nombre}</option>
-                                                                ))
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Modelo:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='modelo'
-                                                            className="form-select"
-                                                            onChange={onInputChange}
-                                                            required
-                                                        >
-                                                            <option defaultValue={celular.modelo}>{celular.modelo}</option>
-                                                            {
-                                                                modelos.map(modelo => (
-                                                                    (modelo.nombre !== celular.modelo) &&
-                                                                    <option value={modelo.nombre}>{modelo.nombre}</option>
-                                                                ))
-                                                            }
+                                                            <option defaultValue="">Estado...</option>
+                                                            <option value="Activo">Activo</option>
+                                                            <option value="Inactivo">Inactivo</option>
                                                         </select>
                                                     </div>
                                                 </ListGroup.Item>
@@ -221,52 +113,7 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit, ma
                                                             value={usuario}
                                                             onChange={onInputChange}
                                                             name='usuario'
-                                                        />
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Estado:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            className="form-select"
-                                                            onChange={onInputChange}
-                                                            name='estado'
                                                             required
-                                                        >
-                                                            <option defaultValue={celular.estado}>{celular.estado}</option>
-                                                            {
-                                                                (celular.estado === 'Activo')
-                                                                    ? <option value="Inactivo">Inactivo</option>
-                                                                    : <option value="Activo">Activo</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Corporativo:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            className="form-select"
-                                                            name='corporativo'
-                                                            onChange={onInputChange}
-                                                            required
-                                                        >
-                                                            <option defaultValue={celular.corporativo}>{celular.corporativo}</option>
-                                                            {
-                                                                (celular.corporativo === 'Si')
-                                                                    ? <option value="No">No</option>
-                                                                    : <option value="Si">Si</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Número:
-                                                    <div className='input-group input-group-sm'>
-                                                        <input
-                                                            type="number"
-                                                            className="form-control"
-                                                            placeholder={celular.numero}
-                                                            value={numero}
-                                                            onChange={onInputChange}
-                                                            name='numero'
                                                         />
                                                     </div>
                                                 </ListGroup.Item>

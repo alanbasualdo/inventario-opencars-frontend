@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 import { useImpStore } from '../hooks/useImpStore'
 import { ImpresorasForm } from '../components/Impresoras/ImpresorasForm'
 import { ImpresorasList } from '../components/Impresoras/ImpresorasList'
-import { Badge } from 'react-bootstrap'
+import { Badge, Spinner } from 'react-bootstrap'
 
 export const ImpresorasPage = () => {
 
-    const { impresoras, marcas, modelos, toners, proveedores, startGetImp, startDeleteImp, startPutImp } = useImpStore()
+    const { impresoras, marcas, modelos, toners, proveedores, startGetImp, startDeleteImp, startPutImp, status } = useImpStore()
     const [parametro, setParametro] = useState("")
     const [busqueda, setBusqueda] = useState("")
 
@@ -95,17 +95,20 @@ export const ImpresorasPage = () => {
                     {(parametro !== "") && <Badge bg="success mt-3" pill>{results.length}</Badge>}
                 </div>
             </div>
-
-            <ImpresorasList
-                results={results}
-                startDeleteImp={startDeleteImp}
-                startPutImp={startPutImp}
-                submit={submit}
-                marcas={marcas}
-                modelos={modelos}
-                toners={toners}
-                proveedores={proveedores}
-            />
+            {
+                status === 'loading'
+                    ? <div className='text-center mt-5'><Spinner animation="border" variant="light" /></div>
+                    : <ImpresorasList
+                        results={results}
+                        startDeleteImp={startDeleteImp}
+                        startPutImp={startPutImp}
+                        submit={submit}
+                        marcas={marcas}
+                        modelos={modelos}
+                        toners={toners}
+                        proveedores={proveedores}
+                    />
+            }
         </>
     )
 }

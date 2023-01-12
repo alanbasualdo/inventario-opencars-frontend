@@ -1,13 +1,13 @@
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { useEffect, useState } from 'react'
-import { Badge } from 'react-bootstrap'
+import { Badge, Spinner } from 'react-bootstrap'
 import { CelularesList } from '../components/Celulares/CelularesList'
 import { CelularlesForm } from '../components/Celulares/CelularlesForm'
 import { useCelStore } from '../hooks/useCelStore'
 
 export const CelularesPage = () => {
 
-    const { celulares, marcas, modelos, startGetCel, startDeleteCel, startPutCel } = useCelStore()
+    const { celulares, marcas, modelos, startGetCel, startDeleteCel, startPutCel, status } = useCelStore()
     const [parametro, setParametro] = useState("")
     const [busqueda, setBusqueda] = useState("")
 
@@ -86,15 +86,18 @@ export const CelularesPage = () => {
                 </div>
             </div>
 
-            <CelularesList
-                results={results}
-                startDeleteCel={startDeleteCel}
-                startPutCel={startPutCel}
-                submit={submit}
-                marcas={marcas}
-                modelos={modelos}
-            />
-
+            {
+                status === 'loading'
+                    ? <div className='text-center mt-5'><Spinner animation="border" variant="light" /></div>
+                    : <CelularesList
+                        results={results}
+                        startDeleteCel={startDeleteCel}
+                        startPutCel={startPutCel}
+                        submit={submit}
+                        marcas={marcas}
+                        modelos={modelos}
+                    />
+            }
         </>
     )
 }

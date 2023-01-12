@@ -1,35 +1,22 @@
 import { useState } from 'react'
 import { Badge, Card, Col, ListGroup, Row } from 'react-bootstrap'
-import { useCityStore } from '../../hooks/useCityStore'
 import { useForm } from '../../hooks/useForm'
-import { useSucStore } from '../../hooks/useSucStore'
 
 let formFields = {
     uid: '',
-    ciudad: '',
-    sucursal: '',
-    marca: '',
-    modelo: '',
-    toner: '',
-    propia: '',
     estado: '',
     sector: '',
     codigo: '',
     ip: '',
-    proveedor: '',
     comentarios: ''
 }
 
-export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit, marcas, modelos, toners, proveedores }) => {
-
-    const { ciudades } = useCityStore()
-    const { sucursales } = useSucStore()
+export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit }) => {
 
     const [edit, setEdit] = useState("")
     const [editId, setEditId] = useState("")
 
-    let { uid, ciudad, sucursal, marca, modelo, toner,
-        propia, estado, sector, codigo, ip, proveedor, comentarios, onInputChange } = useForm(formFields)
+    let { uid, estado, sector, codigo, ip, comentarios, onInputChange } = useForm(formFields)
 
     const editBtn = (id) => {
         setEdit(true)
@@ -64,11 +51,17 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit, m
 
     submit = (e) => {
         e.preventDefault()
+        if (estado === '' || sector === '' || codigo === '' || ip === '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Todos los campos deben completarse',
+                text: '"Comentarios" es opcional',
+            })
+            return
+        }
         startPutImp({
-            uid, ciudad, sucursal, marca, modelo, toner,
-            propia, estado, sector, codigo, ip, proveedor, comentarios
+            uid, estado, sector, codigo, ip, comentarios
         })
-
         setEdit(false)
     }
 
@@ -76,8 +69,7 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit, m
         <Row xs={1} sm={2} md={3} lg={4} className="g-4 text-center m-2 animate__animated animate__fadeIn">
             {Array.from(results).map(impresora => (
                 <Col key={impresora.uid}>
-                    {uid = impresora.uid}
-                    <Card>
+                    <Card key={uid = impresora.uid}>
                         <Card.Body>
                             <ListGroup variant="flush">
                                 <div>
@@ -97,113 +89,10 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit, m
                                             </>
                                     }
                                 </div>
-
                                 {
                                     (editId === impresora.uid && edit)
                                         ? <>
                                             <form onSubmit={submit}>
-                                                <ListGroup.Item variant="light">Ciudad:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='ciudad'
-                                                            onChange={onInputChange}
-                                                            className="form-select"
-                                                            required
-                                                        >
-                                                            <option defaultValue={impresora.ciudad}>{impresora.ciudad}</option>
-                                                            {
-                                                                ciudades.map(ciudad => (
-                                                                    (ciudad.nombre !== impresora.ciudad) &&
-                                                                    <option value={ciudad.nombre}>{ciudad.nombre}</option>
-                                                                ))
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Sucursal:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='sucursal'
-                                                            onChange={onInputChange}
-                                                            className="form-select"
-                                                            required
-                                                        >
-                                                            <option defaultValue={impresora.sucursal}>{impresora.sucursal}</option>
-                                                            {
-                                                                sucursales.map(sucursal => (
-                                                                    (sucursal.nombre !== impresora.sucursal) &&
-                                                                    <option value={sucursal.nombre}>{sucursal.nombre}</option>
-                                                                ))
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Marca:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='marca'
-                                                            className="form-select"
-                                                            onChange={onInputChange}
-                                                            required
-                                                        >
-                                                            <option defaultValue={impresora.marca}>{impresora.marca}</option>
-                                                            {
-                                                                marcas.map(marca => (
-                                                                    (marca.nombre !== impresora.marca) &&
-                                                                    <option value={marca.nombre}>{marca.nombre}</option>
-                                                                ))
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Modelo:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='modelo'
-                                                            className="form-select"
-                                                            onChange={onInputChange}
-                                                            required
-                                                        >
-                                                            <option defaultValue={impresora.modelo}>{impresora.modelo}</option>
-                                                            {
-                                                                modelos.map(modelo => (
-                                                                    (modelo.nombre !== impresora.modelo) &&
-                                                                    <option value={modelo.nombre}>{modelo.nombre}</option>
-                                                                ))
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Tóner:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='toner'
-                                                            className="form-select"
-                                                            onChange={onInputChange}
-                                                            required
-                                                        >
-                                                            <option defaultValue={impresora.toner}>{impresora.toner}</option>
-                                                            {
-                                                                toners.map(toner => (
-                                                                    (toner.nombre !== impresora.toner) &&
-                                                                    <option value={toner.nombre}>{toner.nombre}</option>
-                                                                ))
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Propiedad:
-                                                    <div className='input-group input-group-sm'>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder={impresora.propia}
-                                                            value={propia}
-                                                            onChange={onInputChange}
-                                                            name='propia'
-                                                        />
-                                                    </div>
-                                                </ListGroup.Item>
                                                 <ListGroup.Item variant="light">Estado:
                                                     <div className='input-group input-group-sm'>
                                                         <select
@@ -213,8 +102,8 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit, m
                                                             required
                                                         >
                                                             <option defaultValue="">Estado...</option>
-                                                            <option value="Activo">Activa</option>
-                                                            <option value="Inactivo">Inactiva</option>
+                                                            <option value="Activa">Activa</option>
+                                                            <option value="Inactiva">Inactiva</option>
                                                         </select>
                                                     </div>
                                                 </ListGroup.Item>
@@ -227,6 +116,7 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit, m
                                                             value={sector}
                                                             onChange={onInputChange}
                                                             name='sector'
+                                                            required
                                                         />
                                                     </div>
                                                 </ListGroup.Item>
@@ -239,6 +129,7 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit, m
                                                             value={ip}
                                                             onChange={onInputChange}
                                                             name='ip'
+                                                            required
                                                         />
                                                     </div>
                                                 </ListGroup.Item>
@@ -251,25 +142,8 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit, m
                                                             value={codigo}
                                                             onChange={onInputChange}
                                                             name='codigo'
-                                                        />
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Proveedor:
-                                                    <div className='input-group input-group-sm'>
-                                                        <select
-                                                            name='proveedor'
-                                                            className="form-select"
-                                                            onChange={onInputChange}
                                                             required
-                                                        >
-                                                            <option defaultValue={impresora.proveedor}>{impresora.proveedor}</option>
-                                                            {
-                                                                proveedores.map(proveedor => (
-                                                                    (proveedor.nombre !== impresora.proveedor) &&
-                                                                    <option value={proveedor.nombre}>{proveedor.nombre}</option>
-                                                                ))
-                                                            }
-                                                        </select>
+                                                        />
                                                     </div>
                                                 </ListGroup.Item>
                                                 <ListGroup.Item variant="light">Comentarios:

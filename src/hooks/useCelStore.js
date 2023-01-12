@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { onShow } from '../store/celSlice'
+import { onLoad, onShow } from '../store/celSlice'
 import { onShowMarcas } from '../store/celMarcas'
 import { onShowModelos } from '../store/celModelos'
 import inventarioApi from "../api/inventarioApi"
@@ -7,11 +7,12 @@ import inventarioApi from "../api/inventarioApi"
 export const useCelStore = () => {
 
     const dispatch = useDispatch()
-    const { celulares } = useSelector(state => state.cel)
+    const { celulares, status } = useSelector(state => state.cel)
     const { marcas } = useSelector(state => state.celMarcas)
     const { modelos } = useSelector(state => state.celModelos)
 
     const startGetCel = async () => {
+        dispatch(onLoad())
         try {
             const { data } = await inventarioApi.get('/celulares')
             const celulares = data.celulares
@@ -58,20 +59,14 @@ export const useCelStore = () => {
         }
     }
 
-    const startPutCel = async ({ uid, ciudad, sucursal, facturacion, marca,
-        modelo, usuario, estado, corporativo, numero, comentarios }) => {
+    const startPutCel = async ({ uid, usuario, estado, comentarios }) => {
 
         try {
-            const { data } = await inventarioApi.put(`/celulares/${uid}`, {
-                uid, ciudad, sucursal, facturacion, marca, modelo, usuario,
-                estado, corporativo, numero, comentarios
-            })
-
+            const { data } = await inventarioApi.put(`/celulares/${uid}`, { usuario, estado, comentarios })
             if (data.msg === 'ok') {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Celular actualizado con éxito.',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -171,6 +166,7 @@ export const useCelStore = () => {
         celulares,
         marcas,
         modelos,
+        status,
 
         startGetCel,
         startPostCel,

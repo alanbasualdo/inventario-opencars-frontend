@@ -36,12 +36,10 @@ export const CelularlesForm = ({ submit }) => {
 
     submit = (e) => {
         e.preventDefault()
-
         startPostCel({
             ciudad, sucursal, facturacion, marca, modelo,
             usuario, estado, corporativo, numero, comentarios
         })
-
         onResetForm()
     }
 

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { onShow } from '../store/impSlice'
+import { onLoad, onShow } from '../store/impSlice'
 import inventarioApi from "../api/inventarioApi"
 import { onShowMarcas } from '../store/impMarcas'
 import { onShowModelos } from '../store/impModelos'
@@ -9,13 +9,14 @@ import { onShowProveedores } from '../store/impProveedores'
 export const useImpStore = () => {
 
     const dispatch = useDispatch()
-    const { impresoras } = useSelector(state => state.imp)
+    const { impresoras, status } = useSelector(state => state.imp)
     const { marcas } = useSelector(state => state.impMarcas)
     const { modelos } = useSelector(state => state.impModelos)
     const { toners } = useSelector(state => state.impToners)
     const { proveedores } = useSelector(state => state.impProveedores)
 
     const startGetImp = async () => {
+        dispatch(onLoad())
         try {
             const { data } = await inventarioApi.get('/impresoras')
             const impresoras = data.impresoras
@@ -28,7 +29,6 @@ export const useImpStore = () => {
 
     const startPostImp = async ({ ciudad, sucursal, marca, modelo, toner,
         propia, estado, sector, codigo, ip, proveedor, comentarios }) => {
-
         try {
             const { data } = await inventarioApi.post('/impresoras', {
                 ciudad, sucursal, marca, modelo, toner,
@@ -63,22 +63,31 @@ export const useImpStore = () => {
         }
     }
 
-    const startPutImp = async ({ uid, ciudad, sucursal, marca, modelo, toner,
-        propia, sector, codigo, ip, proveedor, comentarios }) => {
+    const startPutImp = async ({ uid, estado, sector, codigo, ip, comentarios }) => {
 
         try {
             const { data } = await inventarioApi.put(`/impresoras/${uid}`, {
-                ciudad, sucursal, marca, modelo, toner,
-                propia, sector, codigo, ip, proveedor, comentarios
+                estado, sector, codigo, ip, comentarios
             })
 
             if (data.msg === 'ok') {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Impresora actualizada con éxito.',
                     showConfirmButton: false,
                     timer: 1000
+                })
+            } else if (data.msg === 'existeIp') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Ya existe impresora con el ip ${ip}`
+                })
+            } else if (data.msg === 'existeCod') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Ya existe impresora con el código ${codigo}`
                 })
             }
         } catch (error) {
@@ -264,6 +273,7 @@ export const useImpStore = () => {
         modelos,
         toners,
         proveedores,
+        status,
 
         startGetImp,
         startPostImp,

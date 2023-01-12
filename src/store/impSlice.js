@@ -9,7 +9,6 @@ export const impSlice = createSlice({
     reducers: {
         onLoad: (state) => {
             state.status = 'loading'
-            state.impresoras = {}
         },
         onShow: (state, { payload = [] }) => {
             state.status = 'ready'

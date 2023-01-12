@@ -9,7 +9,6 @@ export const celSlice = createSlice({
     reducers: {
         onLoad: (state) => {
             state.status = 'loading'
-            state.celulares = {}
         },
         onShow: (state, { payload = [] }) => {
             state.status = 'ready'
