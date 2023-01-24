@@ -74,7 +74,7 @@ export const CelularlesForm = ({ submit }) => {
                                 <option defaultValue="">Ciudad...</option>
                                 {
                                     ciudades.map(ciudad => (
-                                        <option value={ciudad.nombre}>{ciudad.nombre}</option>
+                                        <option key={ciudad.nombre} value={ciudad.nombre}>{ciudad.nombre}</option>
                                     ))
                                 }
                             </select>
@@ -89,7 +89,7 @@ export const CelularlesForm = ({ submit }) => {
                                 <option defaultValue="">Sucursal...</option>
                                 {
                                     sucursales.map(sucursal => (
-                                        <option value={sucursal.nombre}>{sucursal.nombre}</option>
+                                        <option key={sucursal.nombre} value={sucursal.nombre}>{sucursal.nombre}</option>
                                     ))
                                 }
                             </select>
@@ -118,7 +118,7 @@ export const CelularlesForm = ({ submit }) => {
                                 <option defaultValue="">Marca...</option>
                                 {
                                     marcas.map(marca => (
-                                        <option value={marca.nombre}>{marca.nombre}</option>
+                                        <option key={marca.nombre} value={marca.nombre}>{marca.nombre}</option>
                                     ))
                                 }
                             </select>
@@ -135,7 +135,7 @@ export const CelularlesForm = ({ submit }) => {
                                 <option defaultValue="">Modelo...</option>
                                 {
                                     modelos.map(modelo => (
-                                        <option value={modelo.nombre}>{modelo.nombre}</option>
+                                        <option key={modelo.nombre} value={modelo.nombre}>{modelo.nombre}</option>
                                     ))
                                 }
                             </select>

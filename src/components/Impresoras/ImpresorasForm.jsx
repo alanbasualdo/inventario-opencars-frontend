@@ -30,16 +30,22 @@ export const ImpresorasForm = ({ submit }) => {
     const { sucursales } = useSucStore()
     const { ciudades } = useCityStore()
 
+    const [conexion, setConexion] = useState('')
+
     const [show, setShow] = useState(false)
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
 
-    const { ciudad, sucursal, marca, modelo, toner,
+    let { ciudad, sucursal, marca, modelo, toner,
         propia, estado, sector,
         codigo, ip, proveedor, comentarios, onInputChange, onResetForm } = useForm(formFields)
 
     submit = (e) => {
         e.preventDefault()
+
+        if (conexion === 'USB') {
+            ip = conexion
+        }
 
         startPostImp({
             ciudad, sucursal, marca, modelo, toner,
@@ -82,7 +88,7 @@ export const ImpresorasForm = ({ submit }) => {
                                 <option defaultValue="">Ciudad...</option>
                                 {
                                     ciudades.map(ciudad => (
-                                        <option value={ciudad.nombre}>{ciudad.nombre}</option>
+                                        <option key={ciudad.nombre} value={ciudad.nombre}>{ciudad.nombre}</option>
                                     ))
                                 }
                             </select>
@@ -97,7 +103,7 @@ export const ImpresorasForm = ({ submit }) => {
                                 <option defaultValue="">Sucursal...</option>
                                 {
                                     sucursales.map(sucursal => (
-                                        <option value={sucursal.nombre}>{sucursal.nombre}</option>
+                                        <option key={sucursal.nombre} value={sucursal.nombre}>{sucursal.nombre}</option>
                                     ))
                                 }
                             </select>
@@ -114,7 +120,7 @@ export const ImpresorasForm = ({ submit }) => {
                                 <option defaultValue="">Marca...</option>
                                 {
                                     marcas.map(marca => (
-                                        <option value={marca.nombre}>{marca.nombre}</option>
+                                        <option key={marca.nombre} value={marca.nombre}>{marca.nombre}</option>
                                     ))
                                 }
                             </select>
@@ -129,7 +135,7 @@ export const ImpresorasForm = ({ submit }) => {
                                 <option defaultValue="">Modelo...</option>
                                 {
                                     modelos.map(modelo => (
-                                        <option value={modelo.nombre}>{modelo.nombre}</option>
+                                        <option key={modelo.nombre} value={modelo.nombre}>{modelo.nombre}</option>
                                     ))
                                 }
                             </select>
@@ -145,7 +151,7 @@ export const ImpresorasForm = ({ submit }) => {
                                 <option defaultValue="">Tóner...</option>
                                 {
                                     toners.map(toner => (
-                                        <option value={toner.nombre}>{toner.nombre}</option>
+                                        <option key={toner.nombre} value={toner.nombre}>{toner.nombre}</option>
                                     ))
                                 }
                             </select>
@@ -174,15 +180,21 @@ export const ImpresorasForm = ({ submit }) => {
                                 <option value="Activa">Activa</option>
                                 <option value="Inactiva">Inactiva</option>
                             </select>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Sector"
-                                name='sector'
-                                value={sector}
-                                onChange={onInputChange}
+                            <select
+                                className="form-select"
+                                name='conexion'
+                                value={conexion}
+                                onChange={event => setConexion(event.target.value)}
                                 required
-                            />
+                            >
+                                <option defaultValue=''>Conexión...</option>
+                                {
+                                    <>
+                                        <option value='IP'>IP</option>
+                                        <option value='USB'>USB</option>
+                                    </>
+                                }
+                            </select>
                         </div>
 
                         <div className="input-group input-group-sm mb-2">
@@ -197,12 +209,26 @@ export const ImpresorasForm = ({ submit }) => {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="IP"
-                                name='ip'
-                                value={ip}
+                                placeholder="Sector"
+                                name='sector'
+                                value={sector}
                                 onChange={onInputChange}
+                                required
                             />
                         </div>
+
+                        {conexion === 'IP' &&
+                            <div className="input-group input-group-sm mb-2">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="IP"
+                                    name='ip'
+                                    value={ip}
+                                    onChange={onInputChange}
+                                />
+                            </div>
+                        }
 
                         {
                             (propia === 'Alquilada') &&
@@ -216,7 +242,7 @@ export const ImpresorasForm = ({ submit }) => {
                                     <option defaultValue="">Proveedor...</option>
                                     {
                                         proveedores.map(proveedor => (
-                                            <option value={proveedor.nombre}>{proveedor.nombre}</option>
+                                            <option key={proveedor.nombre} value={proveedor.nombre}>{proveedor.nombre}</option>
                                         ))
                                     }
                                 </select>
