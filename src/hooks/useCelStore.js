@@ -25,13 +25,11 @@ export const useCelStore = () => {
 
     const startPostCel = async ({ ciudad, sucursal, facturacion, marca, modelo,
         usuario, estado, corporativo, numero, comentarios }) => {
-
         try {
             const { data } = await inventarioApi.post('/celulares', {
                 ciudad, sucursal, facturacion, marca, modelo,
                 usuario, estado, corporativo, numero, comentarios
             })
-
             if (data.msg === 'ok') {
                 Swal.fire({
                     position: 'center',
@@ -39,6 +37,7 @@ export const useCelStore = () => {
                     showConfirmButton: false,
                     timer: 1500
                 })
+                startGetCel()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -54,13 +53,13 @@ export const useCelStore = () => {
     const startDeleteCel = async (id) => {
         try {
             await inventarioApi.delete(`/celulares/${id}`)
+            startGetCel()
         } catch (error) {
             console.log(error)
         }
     }
 
     const startPutCel = async ({ uid, usuario, estado, comentarios }) => {
-
         try {
             const { data } = await inventarioApi.put(`/celulares/${uid}`, { usuario, estado, comentarios })
             if (data.msg === 'ok') {
@@ -70,6 +69,7 @@ export const useCelStore = () => {
                     showConfirmButton: false,
                     timer: 1500
                 })
+                startGetCel()
             }
         } catch (error) {
             console.log(error)
@@ -99,6 +99,7 @@ export const useCelStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetMarcas()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -114,6 +115,7 @@ export const useCelStore = () => {
     const startDeleteMarca = async (id) => {
         try {
             await inventarioApi.delete(`/celulares/marcasCelulares/${id}`)
+            startGetMarcas()
         } catch (error) {
             console.log(error)
         }
@@ -142,6 +144,7 @@ export const useCelStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetModelos()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -157,6 +160,7 @@ export const useCelStore = () => {
     const startDeleteModelo = async (id) => {
         try {
             await inventarioApi.delete(`/celulares/modelosCelulares/${id}`)
+            startGetModelos()
         } catch (error) {
             console.log(error)
         }

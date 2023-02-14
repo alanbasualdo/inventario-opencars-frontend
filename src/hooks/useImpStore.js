@@ -34,7 +34,6 @@ export const useImpStore = () => {
                 ciudad, sucursal, marca, modelo, toner,
                 propia, estado, sector, codigo, ip, proveedor, comentarios
             })
-
             if (data.msg === 'ok') {
                 Swal.fire({
                     position: 'center',
@@ -43,6 +42,7 @@ export const useImpStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetImp()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -58,18 +58,17 @@ export const useImpStore = () => {
     const startDeleteImp = async (id) => {
         try {
             await inventarioApi.delete(`/impresoras/${id}`)
+            startGetImp()
         } catch (error) {
             console.log(error)
         }
     }
 
-    const startPutImp = async ({ uid, estado, sector, codigo, ip, comentarios }) => {
-
+    const startPutImp = async ({ uid, estado, sector, ip, comentarios }) => {
         try {
             const { data } = await inventarioApi.put(`/impresoras/${uid}`, {
-                estado, sector, codigo, ip, comentarios
+                estado, sector, ip, comentarios
             })
-
             if (data.msg === 'ok') {
                 Swal.fire({
                     position: 'center',
@@ -77,6 +76,7 @@ export const useImpStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetImp()
             } else if (data.msg === 'existeIp') {
                 Swal.fire({
                     icon: 'error',
@@ -118,6 +118,7 @@ export const useImpStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetMarcas()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -133,6 +134,7 @@ export const useImpStore = () => {
     const startDeleteMarca = async (id) => {
         try {
             await inventarioApi.delete(`/impresoras/marcasImpresoras/${id}`)
+            startGetMarcas()
         } catch (error) {
             console.log(error)
         }
@@ -161,6 +163,7 @@ export const useImpStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetModelos()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -176,6 +179,7 @@ export const useImpStore = () => {
     const startDeleteModelo = async (id) => {
         try {
             await inventarioApi.delete(`/impresoras/modelosImpresoras/${id}`)
+            startGetModelos()
         } catch (error) {
             console.log(error)
         }
@@ -204,6 +208,7 @@ export const useImpStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetToners()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -219,6 +224,7 @@ export const useImpStore = () => {
     const startDeleteToner = async (id) => {
         try {
             await inventarioApi.delete(`/impresoras/toners/${id}`)
+            startGetToners()
         } catch (error) {
             console.log(error)
         }
@@ -247,6 +253,7 @@ export const useImpStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetProveedores()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -262,6 +269,7 @@ export const useImpStore = () => {
     const startDeleteProveedor = async (id) => {
         try {
             await inventarioApi.delete(`/impresoras/proveedores/${id}`)
+            startGetProveedores()
         } catch (error) {
             console.log(error)
         }

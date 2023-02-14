@@ -19,7 +19,6 @@ export const useSucStore = () => {
     }
 
     const startPostSuc = async ({ nombre }) => {
-
         try {
             const { data } = await inventarioApi.post('/sucursales', { nombre })
             if (data.msg === 'ok') {
@@ -29,6 +28,7 @@ export const useSucStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetSuc()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -44,6 +44,7 @@ export const useSucStore = () => {
     const startDeleteSuc = async (id) => {
         try {
             await inventarioApi.delete(`/sucursales/${id}`)
+            startGetSuc()
         } catch (error) {
             console.log(error)
         }

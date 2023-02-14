@@ -9,3 +9,13 @@ h5 {
 body {
     background-color: rgba(0, 0, 0, 0.850);
 }
+
+body::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 20px;
+}

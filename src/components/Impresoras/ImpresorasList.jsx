@@ -6,7 +6,6 @@ let formFields = {
     uid: '',
     estado: '',
     sector: '',
-    codigo: '',
     ip: '',
     comentarios: ''
 }
@@ -16,7 +15,7 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
     const [edit, setEdit] = useState("")
     const [editId, setEditId] = useState("")
 
-    let { uid, estado, sector, codigo, ip, comentarios, onInputChange } = useForm(formFields)
+    let { uid, estado, sector, ip, comentarios, onInputChange } = useForm(formFields)
 
     const editBtn = (id) => {
         setEdit(true)
@@ -51,7 +50,7 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
 
     submit = (e) => {
         e.preventDefault()
-        if (estado === '' || sector === '' || codigo === '' || ip === '') {
+        if (estado === '' || sector === '' || ip === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Todos los campos deben completarse',
@@ -60,7 +59,7 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
             return
         }
         startPutImp({
-            uid, estado, sector, codigo, ip, comentarios
+            uid, estado, sector, ip, comentarios
         })
         setEdit(false)
     }
@@ -129,19 +128,6 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
                                                             value={ip}
                                                             onChange={onInputChange}
                                                             name='ip'
-                                                            required
-                                                        />
-                                                    </div>
-                                                </ListGroup.Item>
-                                                <ListGroup.Item variant="light">Código:
-                                                    <div className='input-group input-group-sm'>
-                                                        <input
-                                                            type="number"
-                                                            className="form-control"
-                                                            placeholder={impresora.codigo}
-                                                            value={codigo}
-                                                            onChange={onInputChange}
-                                                            name='codigo'
                                                             required
                                                         />
                                                     </div>

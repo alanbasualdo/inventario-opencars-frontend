@@ -19,10 +19,8 @@ export const useCityStore = () => {
     }
 
     const startPostCity = async ({ nombre }) => {
-
         try {
             const { data } = await inventarioApi.post('/ciudades', { nombre })
-
             if (data.msg === 'ok') {
                 Swal.fire({
                     position: 'center',
@@ -30,6 +28,7 @@ export const useCityStore = () => {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                startGetCity()
             } else if (data.msg === 'existe') {
                 Swal.fire({
                     icon: 'error',
@@ -45,6 +44,7 @@ export const useCityStore = () => {
     const startDeleteCity = async (id) => {
         try {
             await inventarioApi.delete(`/ciudades/${id}`)
+            startGetCity()
         } catch (error) {
             console.log(error)
         }

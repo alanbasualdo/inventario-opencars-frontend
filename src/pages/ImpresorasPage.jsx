@@ -62,7 +62,7 @@ export const ImpresorasPage = () => {
             <ImpresorasForm submit={submit} />
 
             <div className='text-center'>
-                <h3>Impresoras <b className='text-success' title='Impresoras activas'>|{activas}|</b> <b className='text-secondary' title='Impresoras inactivas'>|{inactivas}|</b></h3>
+                <h3>Impresoras <b className='text-success' title='Impresoras activas'>({activas})</b> <b className='text-secondary' title='Impresoras inactivas'>({inactivas})</b></h3>
             </div>
 
             <div className="col-12 d-flex justify-content-center align-items-center">

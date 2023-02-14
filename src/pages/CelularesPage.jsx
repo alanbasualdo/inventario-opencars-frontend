@@ -55,7 +55,7 @@ export const CelularesPage = () => {
             <CelularlesForm submit={submit} />
 
             <div className='text-center'>
-                <h3>Celulares <b className='text-success' title='Celulares activos'>|{activos}|</b> <b className='text-secondary' title='Celulares inactivos'>|{inactivos}|</b></h3>
+                <h3>Celulares <b className='text-success' title='Celulares activos'>({activos})</b> <b className='text-secondary' title='Celulares inactivos'>({inactivos})</b></h3>
             </div>
 
             <div className="col-12 d-flex justify-content-center align-items-center">
