@@ -10,7 +10,7 @@ export const Navbar = () => {
 
     const logOut = () => {
         Swal.fire({
-            title: 'Desea salir?',
+            title: 'Salir?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -44,6 +44,7 @@ export const Navbar = () => {
                 </div>
                 <NavLink to="/impresoras" className="btn btn-sm btn-outline-light me-2" type="button">Impresoras</NavLink>
                 <NavLink to="/celulares" className="btn btn-sm btn-outline-light me-2" type="button">Celulares</NavLink>
+                <NavLink to="/register" className="btn btn-sm btn-outline-primary me-2" type="button"><i className="bi bi-person"></i></NavLink>
                 <button className="btn btn-sm btn-outline-danger" type="button" onClick={logOut}>Salir</button>
             </div>
         </nav>

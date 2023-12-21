@@ -18,8 +18,13 @@ export const ImpresorasList = ({ results, startDeleteImp, startPutImp, submit })
     let { uid, estado, sector, ip, comentarios, onInputChange } = useForm(formFields)
 
     const editBtn = (id) => {
-        setEdit(true)
-        setEditId(id)
+        Swal.fire({
+            icon: 'info',
+            title: 'Función deshabilitada',
+            text: 'Estamos trabajando en esto.'
+        })
+        /* setEdit(true)
+        setEditId(id) */
     }
 
     const closeEdit = () => {

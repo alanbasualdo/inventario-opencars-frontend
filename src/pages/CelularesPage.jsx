@@ -25,11 +25,11 @@ export const CelularesPage = () => {
         results = celulares.filter((dato) => dato.marca.toLowerCase().includes(busqueda.toLowerCase()))
     } else if (parametro === 'modelo') {
         results = celulares.filter((dato) => dato.modelo.toLowerCase().includes(busqueda.toLowerCase()))
-    } else if (parametro === 'toner') {
-        results = celulares.filter((dato) => dato.numero.toLowerCase().includes(busqueda.toLowerCase()))
-    } else if (parametro === 'propiedad') {
+    } else if (parametro === 'numero') {
+        results = celulares.filter((dato) => dato.numero?.toString().includes(busqueda.toLowerCase()))
+    } else if (parametro === 'usuario') {
         results = celulares.filter((dato) => dato.usuario.toLowerCase().includes(busqueda.toLowerCase()))
-    } else if (parametro === 'sector') {
+    } else if (parametro === 'facturacion') {
         results = celulares.filter((dato) => dato.facturacion.toLowerCase().includes(busqueda.toLowerCase()))
     }
 
@@ -71,9 +71,9 @@ export const CelularesPage = () => {
                         <option value="sucursal">Sucursal</option>
                         <option value="marca">Marca</option>
                         <option value="modelo">Modelo</option>
-                        <option value="toner">Número</option>
-                        <option value="propiedad">Usuario</option>
-                        <option value="sector">Facturación</option>
+                        <option value="numero">Número</option>
+                        <option value="usuario">Usuario</option>
+                        <option value="facturacion">Facturación</option>
                     </select>
                     {
                         (parametro === "")

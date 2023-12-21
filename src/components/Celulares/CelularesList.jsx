@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Badge, Card, Col, ListGroup, Row } from 'react-bootstrap'
 import { useForm } from "../../hooks/useForm"
 
@@ -17,8 +17,13 @@ export const CelularesList = ({ results, startDeleteCel, startPutCel, submit }) 
     let { uid, usuario, estado, comentarios, onInputChange } = useForm(formFields)
 
     const editBtn = (id) => {
-        setEdit(true)
-        setEditId(id)
+        Swal.fire({
+            icon: 'info',
+            title: 'Función deshabilitada',
+            text: 'Estamos trabajando en esto.'
+        })
+        /* setEdit(true)
+        setEditId(id) */
     }
 
     const closeEdit = () => {

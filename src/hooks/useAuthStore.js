@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import inventarioApi from '../api/inventarioApi'
-import { onChecking, onLogin, onLogout } from "../store/authSlice"
+import { onChecking, onLogin, onLogout, onShow } from "../store/authSlice"
 
 export const useAuthStore = () => {
 
-    const { status, email } = useSelector(state => state.auth)
+    const { status, email, users } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     const startLogin = async ({ email, password }) => {
@@ -40,6 +40,43 @@ export const useAuthStore = () => {
         }
     }
 
+    const startRegister = async ({ email, password }) => {
+        const { data } = await inventarioApi.post('/register', { email, password })
+        if (data.msg === 'EmailAlreadyRegistered') {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Email ya registrado',
+                showConfirmButton: false,
+                timer: 1000
+            })
+        } else if (data.msg === 'UserCrated') {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Usuario creado correctamente',
+                showConfirmButton: false,
+                timer: 1000
+            })
+            startGetUsers()
+        }
+    }
+
+    const startGetUsers = async () => {
+        const { data } = await inventarioApi.get('/register')
+        const users = data.users
+        dispatch(onShow(users))
+    }
+
+    const startDeleteUser = async (id) => {
+        try {
+            await inventarioApi.delete(`/register/${id}`)
+            startGetUsers()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const checkAuth = async () => {
         const token = sessionStorage.getItem('token')
         if (!token) return dispatch(onLogout())
@@ -64,10 +101,14 @@ export const useAuthStore = () => {
         // Propiedades
         status,
         email,
+        users,
 
         // Métodos
         startLogin,
         checkAuth,
-        startLogout
+        startLogout,
+        startRegister,
+        startGetUsers,
+        startDeleteUser
     }
 }
